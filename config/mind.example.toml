@@ -1,0 +1,53 @@
+# Mind settings (runs on K8). Copy to mind.toml and edit.
+# Secrets are NOT set here. They come from the environment:
+#   BODY_TOKEN, ANTHROPIC_API_KEY (for --live), HA_TOKEN
+
+brain = "api"                          # or "claude_code": a locked-down Claude Code process on a plan
+port = 8765
+state_dir = "/data/state"              # SQLite db, day histories, alerts.log
+memory_dir = "/data/memories"          # the live /memories folder Nick can edit
+day_starts_at = "04:00"                # Perth. One conversation per day.
+nightly_after = "04:15"                # diary job for the day that just ended
+retention_days = 30                    # state/days logs + transcripts deleted after this
+min_stt_conf = 0.55                    # unclear speech is ignored (no API call)
+
+[claude]
+model = "claude-opus-5-5"
+effort_chat = "low"
+effort_task = "medium"
+max_tokens = 2048                      # chat replies (thinking counts towards this)
+nightly_max_tokens = 16000             # the diary job
+compact_trigger_tokens = 150000
+web_search_max_uses = 5
+
+[budget]
+# REQUIRED for --live: the robot's monthly running allowance in US$.
+# There is deliberately no default. Set it to the figure Nick decides.
+# monthly_cap_usd = 0.0
+warn_fraction = 0.70
+brief_fraction = 0.90
+stop_at_cap = true
+# Optional: a command run once when the 70 % warning fires; the message is its last argument.
+# alert_command = "/usr/local/bin/notify-nick"
+
+# Prices in US$ per million tokens. Check https://platform.claude.com/docs/en/about-claude/pricing
+[budget.prices.claude-opus-5-5]
+input = 4.00
+output = 20.00
+cache_read = 0.20
+cache_write_5m = 5.00
+cache_write_1h = 8.00
+
+[house]
+url = "http://homeassistant.local:8123"
+allow = ["binary_sensor.*door*", "binary_sensor.*window*", "sensor.*temperature*", "weather.*", "light.*"]
+deny = ["camera.*", "person.*", "device_tracker.*", "alarm_control_panel.*", "lock.*", "*garage*", "zone.*"]
+
+[claude_code]
+# Only used when brain = "claude_code". The plan token comes from the environment
+# (CLAUDE_CODE_OAUTH_TOKEN, made once with `claude setup-token`), never this file.
+executable = "claude"
+model = "claude-opus-5-5"
+effort = "low"
+work_dir = "/data/cc-brain"            # its own HOME, config dir and working dir
+turn_timeout_s = 300

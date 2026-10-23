@@ -1,0 +1,366 @@
+/home/nick/Desktop/Electrifix-Claude/claude-body/cad/render.py:129: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+/home/nick/Desktop/Electrifix-Claude/claude-body/cad/render.py:50: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m.use_nodes = True
+/home/nick/Desktop/Electrifix-Claude/claude-body/cad/render.py:65: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m.use_nodes = True
+00:00.852  io.stl           | WARNING Removed 1 degenerate triangles during import
+00:00.879  io.stl           | WARNING Removed 4 degenerate triangles during import
+00:00.908  io.stl           | WARNING Removed 3 degenerate triangles during import
+00:40.396  render           | Saved: '/home/nick/Desktop/Electrifix-Claude/claude-body/renders/hero.png'
+00:40.898  io.stl           | WARNING Removed 1 degenerate triangles during import
+00:40.925  io.stl           | WARNING Removed 4 degenerate triangles during import
+00:40.953  io.stl           | WARNING Removed 3 degenerate triangles during import
+01:11.334  render           | Saved: '/home/nick/Desktop/Electrifix-Claude/claude-body/renders/side.png'
+01:11.796  io.stl           | WARNING Removed 1 degenerate triangles during import
+01:11.822  io.stl           | WARNING Removed 4 degenerate triangles during import
+01:11.853  io.stl           | WARNING Removed 3 degenerate triangles during import
+01:58.042  render           | Saved: '/home/nick/Desktop/Electrifix-Claude/claude-body/renders/back.png'
+Blender 5.0.1
+Timer 'STL Import' took 0.28 ms
+Timer 'STL Import' took 0.20 ms
+Timer 'STL Import' took 4.73 ms
+Timer 'STL Import' took 2.46 ms
+Timer 'STL Import' took 1.41 ms
+Timer 'STL Import' took 3.22 ms
+Timer 'STL Import' took 1.99 ms
+Timer 'STL Import' took 2.67 ms
+Timer 'STL Import' took 1.65 ms
+Timer 'STL Import' took 1.48 ms
+Timer 'STL Import' took 1.49 ms
+Timer 'STL Import' took 0.98 ms
+Timer 'STL Import' took 1.39 ms
+Timer 'STL Import' took 5.97 ms
+Timer 'STL Import' took 5.25 ms
+Timer 'STL Import' took 0.51 ms
+Timer 'STL Import' took 1.52 ms
+Timer 'STL Import' took 0.47 ms
+Timer 'STL Import' took 0.33 ms
+Timer 'STL Import' took 0.87 ms
+Timer 'STL Import' took 0.95 ms
+Timer 'STL Import' took 4.86 ms
+Timer 'STL Import' took 12.66 ms
+Timer 'STL Import' took 5.96 ms
+Timer 'STL Import' took 0.77 ms
+Timer 'STL Import' took 0.81 ms
+Timer 'STL Import' took 1.65 ms
+Timer 'STL Import' took 0.82 ms
+Timer 'STL Import' took 0.32 ms
+Timer 'STL Import' took 1.39 ms
+Timer 'STL Import' took 1.08 ms
+Timer 'STL Import' took 0.42 ms
+Timer 'STL Import' took 1.05 ms
+Timer 'STL Import' took 1.14 ms
+Timer 'STL Import' took 3.33 ms
+Timer 'STL Import' took 2.35 ms
+Timer 'STL Import' took 2.63 ms
+Timer 'STL Import' took 0.25 ms
+Timer 'STL Import' took 0.28 ms
+Timer 'STL Import' took 4.06 ms
+Timer 'STL Import' took 2.34 ms
+Timer 'STL Import' took 1.76 ms
+Timer 'STL Import' took 4.23 ms
+Timer 'STL Import' took 2.52 ms
+Timer 'STL Import' took 3.85 ms
+Timer 'STL Import' took 1.66 ms
+Timer 'STL Import' took 1.88 ms
+Timer 'STL Import' took 1.67 ms
+Timer 'STL Import' took 1.06 ms
+Timer 'STL Import' took 1.34 ms
+Timer 'STL Import' took 7.29 ms
+Timer 'STL Import' took 6.29 ms
+Timer 'STL Import' took 0.59 ms
+Timer 'STL Import' took 2.02 ms
+Timer 'STL Import' took 0.45 ms
+Timer 'STL Import' took 0.48 ms
+Timer 'STL Import' took 1.33 ms
+Timer 'STL Import' took 1.18 ms
+Timer 'STL Import' took 4.89 ms
+Timer 'STL Import' took 10.37 ms
+Timer 'STL Import' took 6.10 ms
+Timer 'STL Import' took 0.72 ms
+Timer 'STL Import' took 0.71 ms
+Timer 'STL Import' took 1.78 ms
+Timer 'STL Import' took 1.08 ms
+Timer 'STL Import' took 0.30 ms
+Timer 'STL Import' took 1.34 ms
+Timer 'STL Import' took 1.50 ms
+Timer 'STL Import' took 0.51 ms
+Timer 'STL Import' took 1.13 ms
+Timer 'STL Import' took 1.24 ms
+Timer 'STL Import' took 3.43 ms
+Timer 'STL Import' took 2.36 ms
+Timer 'STL Import' took 2.24 ms
+Timer 'STL Import' took 0.25 ms
+Timer 'STL Import' took 0.20 ms
+Timer 'STL Import' took 3.54 ms
+Timer 'STL Import' took 1.98 ms
+Timer 'STL Import' took 1.66 ms
+Timer 'STL Import' took 3.87 ms
+Timer 'STL Import' took 2.39 ms
+Timer 'STL Import' took 3.10 ms
+Timer 'STL Import' took 1.56 ms
+Timer 'STL Import' took 1.55 ms
+Timer 'STL Import' took 1.58 ms
+Timer 'STL Import' took 1.07 ms
+Timer 'STL Import' took 1.37 ms
+Timer 'STL Import' took 6.56 ms
+Timer 'STL Import' took 5.41 ms
+Timer 'STL Import' took 0.53 ms
+Timer 'STL Import' took 1.64 ms
+Timer 'STL Import' took 0.39 ms
+Timer 'STL Import' took 0.39 ms
+Timer 'STL Import' took 1.20 ms
+Timer 'STL Import' took 1.33 ms
+Timer 'STL Import' took 5.23 ms
+Timer 'STL Import' took 10.18 ms
+Timer 'STL Import' took 8.00 ms
+Timer 'STL Import' took 0.93 ms
+Timer 'STL Import' took 1.06 ms
+Timer 'STL Import' took 2.00 ms
+Timer 'STL Import' took 1.37 ms
+Timer 'STL Import' took 0.38 ms
+Timer 'STL Import' took 1.53 ms
+Timer 'STL Import' took 1.52 ms
+Timer 'STL Import' took 0.52 ms
+Timer 'STL Import' took 1.54 ms
+Timer 'STL Import' took 1.47 ms
+Timer 'STL Import' took 4.43 ms
+Timer 'STL Import' took 2.36 ms
+Timer 'STL Import' took 2.91 ms
+Timer 'STL Import' took 0.35 ms
+Timer 'STL Import' took 0.26 ms
+Timer 'STL Import' took 4.17 ms
+Timer 'STL Import' took 2.22 ms
+Timer 'STL Import' took 1.65 ms
+Timer 'STL Import' took 4.67 ms
+Timer 'STL Import' took 2.63 ms
+Timer 'STL Import' took 3.56 ms
+Timer 'STL Import' took 1.73 ms
+Timer 'STL Import' took 1.66 ms
+Timer 'STL Import' took 1.61 ms
+Timer 'STL Import' took 1.01 ms
+Timer 'STL Import' took 1.01 ms
+Timer 'STL Import' took 6.24 ms
+Timer 'STL Import' took 5.66 ms
+Timer 'STL Import' took 0.51 ms
+Timer 'STL Impo01:58.549  io.stl           | WARNING Removed 1 degenerate triangles during import
+01:58.578  io.stl           | WARNING Removed 4 degenerate triangles during import
+01:58.612  io.stl           | WARNING Removed 3 degenerate triangles during import
+02:53.609  render           | Saved: '/home/nick/Desktop/Electrifix-Claude/claude-body/renders/head.png'
+02:53.839  io.stl           | WARNING Removed 2 degenerate triangles during import
+02:53.858  io.stl           | WARNING Removed 2 degenerate triangles during import
+02:54.735  io.stl           | WARNING Removed 1 degenerate triangles during import
+02:54.767  io.stl           | WARNING Removed 4 degenerate triangles during import
+02:54.801  io.stl           | WARNING Removed 3 degenerate triangles during import
+03:39.372  render           | Saved: '/home/nick/Desktop/Electrifix-Claude/claude-body/renders/exploded.png'
+03:39.532  io.stl           | WARNING Removed 2 degenerate triangles during import
+03:39.545  io.stl           | WARNING Removed 2 degenerate triangles during import
+rt' took 1.70 ms
+Timer 'STL Import' took 0.38 ms
+Timer 'STL Import' took 0.45 ms
+Timer 'STL Import' took 1.38 ms
+Timer 'STL Import' took 1.63 ms
+Timer 'STL Import' took 6.20 ms
+Timer 'STL Import' took 12.95 ms
+Timer 'STL Import' took 7.33 ms
+Timer 'STL Import' took 0.75 ms
+Timer 'STL Import' took 0.73 ms
+Timer 'STL Import' took 1.72 ms
+Timer 'STL Import' took 1.05 ms
+Timer 'STL Import' took 0.41 ms
+Timer 'STL Import' took 1.62 ms
+Timer 'STL Import' took 1.48 ms
+Timer 'STL Import' took 0.43 ms
+Timer 'STL Import' took 1.15 ms
+Timer 'STL Import' took 1.24 ms
+Timer 'STL Import' took 3.77 ms
+Timer 'STL Import' took 2.55 ms
+Timer 'STL Import' took 2.56 ms
+Timer 'STL Import' took 0.41 ms
+Timer 'STL Import' took 0.36 ms
+Timer 'STL Import' took 0.23 ms
+Timer 'STL Import' took 0.20 ms
+Timer 'STL Import' took 0.17 ms
+Timer 'STL Import' took 0.37 ms
+Timer 'STL Import' took 0.38 ms
+Timer 'STL Import' took 0.18 ms
+Timer 'STL Import' took 0.66 ms
+Timer 'STL Import' took 0.58 ms
+Timer 'STL Import' took 0.23 ms
+Timer 'STL Import' took 0.19 ms
+Timer 'STL Import' took 0.27 ms
+Timer 'STL Import' took 0.33 ms
+Timer 'STL Import' took 0.56 ms
+Timer 'STL Import' took 0.34 ms
+Timer 'STL Import' took 0.42 ms
+Timer 'STL Import' took 0.19 ms
+Timer 'STL Import' took 0.45 ms
+Timer 'STL Import' took 0.49 ms
+Timer 'STL Import' took 0.30 ms
+Timer 'STL Import' took 0.37 ms
+Timer 'STL Import' took 0.28 ms
+Timer 'STL Import' took 0.20 ms
+Timer 'STL Import' took 0.22 ms
+Timer 'STL Import' took 0.20 ms
+Timer 'STL Import' took 0.21 ms
+Timer 'STL Import' took 0.22 ms
+Timer 'STL Import' took 0.20 ms
+Timer 'STL Import' took 0.38 ms
+Timer 'STL Import' took 3.86 ms
+Timer 'STL Import' took 2.23 ms
+Timer 'STL Import' took 1.63 ms
+Timer 'STL Import' took 3.91 ms
+Timer 'STL Import' took 2.43 ms
+Timer 'STL Import' took 3.15 ms
+Timer 'STL Import' took 1.67 ms
+Timer 'STL Import' took 1.61 ms
+Timer 'STL Import' took 1.70 ms
+Timer 'STL Import' took 1.10 ms
+Timer 'STL Import' took 1.22 ms
+Timer 'STL Import' took 6.52 ms
+Timer 'STL Import' took 5.47 ms
+Timer 'STL Import' took 0.56 ms
+Timer 'STL Import' took 1.70 ms
+Timer 'STL Import' took 0.45 ms
+Timer 'STL Import' took 0.48 ms
+Timer 'STL Import' took 1.58 ms
+Timer 'STL Import' took 1.11 ms
+Timer 'STL Import' took 5.94 ms
+Timer 'STL Import' took 12.24 ms
+Timer 'STL Import' took 6.20 ms
+Timer 'STL Import' took 0.74 ms
+Timer 'STL Import' took 0.77 ms
+Timer 'STL Import' took 1.83 ms
+Timer 'STL Import' took 1.08 ms
+Timer 'STL Import' took 0.46 ms
+Timer 'STL Import' took 1.39 ms
+Timer 'STL Import' took 1.45 ms
+Timer 'STL Import' took 0.59 ms
+Timer 'STL Import' took 1.28 ms
+Timer 'STL Import' took 1.23 ms
+Timer 'STL Import' took 3.72 ms
+Timer 'STL Import' took 2.35 ms
+Timer 'STL Import' took 2.84 ms
+Timer 'STL Import' took 0.19 ms
+Timer 'STL Import' took 0.17 ms
+Timer 'STL Import' took 0.12 ms
+Timer 'STL Import' took 0.11 ms
+Timer 'STL Import' took 0.11 ms
+Timer 'STL Import' took 0.26 ms
+Timer 'STL Import' took 0.29 ms
+Timer 'STL Import' took 0.13 ms
+Timer 'STL Import' took 0.43 ms
+Timer 'STL Import' took 0.48 ms
+Timer 'STL Import' took 0.13 ms
+Timer 'STL Import' took 0.13 ms
+Timer 'STL Import' took 0.20 ms
+Timer 'STL Import' took 0.23 ms
+Timer 'STL Import' took 0.33 ms
+Timer 'STL Import' took 0.24 ms
+Timer 'STL Import' took 0.45 ms
+Timer 'STL Import' took 0.18 ms
+Timer 'STL Import' took 0.36 ms
+Timer 'STL Import' took 0.35 ms
+Timer 'STL Import' took 0.39 ms
+Timer 'STL Import' took 0.43 ms
+Timer 'STL Import' took 0.35 ms
+Timer 'STL Import' took 0.21 ms
+Timer 'STL Import' took 0.22 ms
+Timer 'STL Import' took 0.21 ms
+Timer 'STL Import' took 0.19 ms
+Timer 'STL Import' took 0.19 ms
+Timer 'STL Import' took 0.19 ms
+Timer 'STL Import' took 0.41 ms
+Timer 'STL Import' took 3.81 ms
+Timer 'STL Import' took 2.34 ms
+Timer 'STL Import' took 2.00 ms
+Timer 'STL Import' took 4.01 ms
+Timer 'STL Import' took 4.49 ms
+Timer 'STL Import' took 4.38 ms
+Timer 'STL Import' took 1.79 ms
+Timer 'STL Import' took 1.76 ms
+Timer 'STL Import' took 1.62 ms
+Timer 'STL Import' took 1.11 ms
+Timer 'STL Import' took 1.16 ms
+Timer 'STL Import' took 6.00 ms
+Timer 'STL Im03:40.413  io.stl           | WARNING Removed 1 degenerate triangles during import
+03:40.437  io.stl           | WARNING Removed 4 degenerate triangles during import
+03:40.466  io.stl           | WARNING Removed 3 degenerate triangles during import
+04:13.630  render           | Saved: '/home/nick/Desktop/Electrifix-Claude/claude-body/renders/inside.png'
+04:14.155  io.stl           | WARNING Removed 1 degenerate triangles during import
+04:14.183  io.stl           | WARNING Removed 4 degenerate triangles during import
+04:14.214  io.stl           | WARNING Removed 3 degenerate triangles during import
+05:04.237  render           | Saved: '/home/nick/Desktop/Electrifix-Claude/claude-body/renders/dock.png'
+wrote /home/nick/Desktop/Electrifix-Claude/claude-body/renders/hero.png
+wrote /home/nick/Desktop/Electrifix-Claude/claude-body/renders/side.png
+wrote /home/nick/Desktop/Electrifix-Claude/claude-body/renders/back.png
+wrote /home/nick/Desktop/Electrifix-Claude/claude-body/renders/head.png
+wrote /home/nick/Desktop/Electrifix-Claude/claude-body/renders/exploded.png
+wrote /home/nick/Desktop/Electrifix-Claude/claude-body/renders/inside.png
+wrote /home/nick/Desktop/Electrifix-Claude/claude-body/renders/dock.png
+port' took 6.32 ms
+Timer 'STL Import' took 0.65 ms
+Timer 'STL Import' took 1.79 ms
+Timer 'STL Import' took 0.47 ms
+Timer 'STL Import' took 0.45 ms
+Timer 'STL Import' took 1.21 ms
+Timer 'STL Import' took 1.14 ms
+Timer 'STL Import' took 4.96 ms
+Timer 'STL Import' took 8.66 ms
+Timer 'STL Import' took 6.13 ms
+Timer 'STL Import' took 0.87 ms
+Timer 'STL Import' took 0.66 ms
+Timer 'STL Import' took 1.57 ms
+Timer 'STL Import' took 1.41 ms
+Timer 'STL Import' took 0.41 ms
+Timer 'STL Import' took 1.50 ms
+Timer 'STL Import' took 1.43 ms
+Timer 'STL Import' took 0.63 ms
+Timer 'STL Import' took 1.20 ms
+Timer 'STL Import' took 1.25 ms
+Timer 'STL Import' took 3.52 ms
+Timer 'STL Import' took 2.82 ms
+Timer 'STL Import' took 3.16 ms
+Timer 'STL Import' took 0.21 ms
+Timer 'STL Import' took 0.19 ms
+Timer 'STL Import' took 3.52 ms
+Timer 'STL Import' took 1.99 ms
+Timer 'STL Import' took 1.55 ms
+Timer 'STL Import' took 3.92 ms
+Timer 'STL Import' took 1.97 ms
+Timer 'STL Import' took 3.36 ms
+Timer 'STL Import' took 1.54 ms
+Timer 'STL Import' took 1.56 ms
+Timer 'STL Import' took 1.66 ms
+Timer 'STL Import' took 1.10 ms
+Timer 'STL Import' took 1.12 ms
+Timer 'STL Import' took 6.25 ms
+Timer 'STL Import' took 5.61 ms
+Timer 'STL Import' took 0.50 ms
+Timer 'STL Import' took 1.70 ms
+Timer 'STL Import' took 0.57 ms
+Timer 'STL Import' took 0.22 ms
+Timer 'STL Import' took 0.24 ms
+Timer 'STL Import' took 0.44 ms
+Timer 'STL Import' took 0.40 ms
+Timer 'STL Import' took 1.15 ms
+Timer 'STL Import' took 1.21 ms
+Timer 'STL Import' took 5.65 ms
+Timer 'STL Import' took 11.05 ms
+Timer 'STL Import' took 6.65 ms
+Timer 'STL Import' took 0.73 ms
+Timer 'STL Import' took 0.71 ms
+Timer 'STL Import' took 1.62 ms
+Timer 'STL Import' took 1.05 ms
+Timer 'STL Import' took 0.42 ms
+Timer 'STL Import' took 1.50 ms
+Timer 'STL Import' took 1.45 ms
+Timer 'STL Import' took 0.52 ms
+Timer 'STL Import' took 1.33 ms
+Timer 'STL Import' took 1.40 ms
+Timer 'STL Import' took 3.93 ms
+Timer 'STL Import' took 2.41 ms
+Timer 'STL Import' took 2.46 ms
+
+Blender quit

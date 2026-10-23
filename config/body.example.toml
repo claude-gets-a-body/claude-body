@@ -1,0 +1,36 @@
+# Body agent settings (runs on the Pi 5). Copy to body.toml and edit.
+# BODY_TOKEN comes from the environment.
+
+mind_url = "ws://k8:8765/body"
+base_driver = "serial"
+face_driver = "serial"
+camera_driver = "opencv"
+nav_driver = "sim"          # "ros2" once nav2 is set up (phase 3)
+voice_driver = "console"    # "local" once the wake word / whisper / Piper clients exist
+base_port = "/dev/serial/by-id/usb-Espressif_base-if00"   # check with: ls -l /dev/serial/by-id/
+face_port = "/dev/serial/by-id/usb-Espressif_face-if00"
+
+quiet_start = "21:00"
+quiet_end = "07:00"
+
+# Named places. kind = normal / keep_out. no_look = the visor never opens there.
+# Places listed here REPLACE the built-in list, so list them all.
+[places.dock]
+[places.lounge]
+[places.kitchen]
+[places.bathroom]
+kind = "keep_out"
+no_look = true
+[places.outside]
+kind = "keep_out"
+[places.ensuite]
+kind = "keep_out"
+no_look = true
+# Bedrooms are keep-out unless a parent enables them, optionally only at set times:
+[places."child 1 bedroom"]
+kind = "normal"
+windows = ["15:30-19:00"]
+no_look = true
+[places."main bedroom"]
+kind = "keep_out"
+no_look = true

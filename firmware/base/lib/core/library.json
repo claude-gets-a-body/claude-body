@@ -1,0 +1,7 @@
+{
+  "name": "base_core",
+  "version": "0.1.0",
+  "description": "Hardware-free logic for the Claude body base firmware (unit-tested natively).",
+  "frameworks": "*",
+  "platforms": "*"
+}

@@ -1,0 +1,4 @@
+-r requirements.txt
+pytest>=8
+pytest-asyncio>=0.24
+pillow                     # only used to make the sample sim frames

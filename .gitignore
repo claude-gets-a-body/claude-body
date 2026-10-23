@@ -1,0 +1,15 @@
+.venv/
+state/
+__pycache__/
+*.pyc
+.pytest_cache/
+.pio/
+media/frames/
+media/render.log
+media/*.mp4
+media/*.gif
+cad/out/assembly/
+cad/*.bak*
+cad/out/build.log
+cad/out/checks.json
+*.backup-*

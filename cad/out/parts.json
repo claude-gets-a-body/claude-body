@@ -1,0 +1,306 @@
+[
+ {
+  "part": "chassis_plate",
+  "x": 224.3,
+  "y": 222.0,
+  "z": 90.0,
+  "grams_pla": 272.0,
+  "material": "PETG"
+ },
+ {
+  "part": "bumper",
+  "x": 136.0,
+  "y": 236.0,
+  "z": 96.0,
+  "grams_pla": 117.0,
+  "material": "PETG cream"
+ },
+ {
+  "part": "skirt_rear",
+  "x": 95.6,
+  "y": 231.5,
+  "z": 96.0,
+  "grams_pla": 90.0,
+  "material": "PETG cream"
+ },
+ {
+  "part": "wheel_hub_L",
+  "x": 90.0,
+  "y": 90.0,
+  "z": 22.0,
+  "grams_pla": 64.0,
+  "material": "PETG"
+ },
+ {
+  "part": "tyre_L",
+  "x": 100.0,
+  "y": 100.0,
+  "z": 22.0,
+  "grams_pla": 32.0,
+  "material": "TPU 95A"
+ },
+ {
+  "part": "ear_L",
+  "x": 26.0,
+  "y": 52.0,
+  "z": 5.0,
+  "grams_pla": 4.0,
+  "material": "TPU 95A (orange)"
+ },
+ {
+  "part": "eye_backplate_L",
+  "x": 53.5,
+  "y": 44.5,
+  "z": 2.0,
+  "grams_pla": 5.0,
+  "material": "PLA"
+ },
+ {
+  "part": "wheel_hub_R",
+  "x": 90.0,
+  "y": 90.0,
+  "z": 22.0,
+  "grams_pla": 64.0,
+  "material": "PETG"
+ },
+ {
+  "part": "tyre_R",
+  "x": 100.0,
+  "y": 100.0,
+  "z": 22.0,
+  "grams_pla": 32.0,
+  "material": "TPU 95A"
+ },
+ {
+  "part": "ear_R",
+  "x": 26.0,
+  "y": 52.0,
+  "z": 5.0,
+  "grams_pla": 4.0,
+  "material": "TPU 95A (orange)"
+ },
+ {
+  "part": "eye_backplate_R",
+  "x": 53.5,
+  "y": 44.5,
+  "z": 2.0,
+  "grams_pla": 5.0,
+  "material": "PLA"
+ },
+ {
+  "part": "caster_housing_F",
+  "x": 46.4,
+  "y": 46.4,
+  "z": 12.4,
+  "grams_pla": 13.0,
+  "material": "PETG"
+ },
+ {
+  "part": "caster_retainer_F",
+  "x": 46.4,
+  "y": 46.4,
+  "z": 5.3,
+  "grams_pla": 6.0,
+  "material": "PETG"
+ },
+ {
+  "part": "caster_housing_R",
+  "x": 46.4,
+  "y": 46.4,
+  "z": 9.4,
+  "grams_pla": 11.0,
+  "material": "PETG"
+ },
+ {
+  "part": "caster_retainer_R",
+  "x": 46.4,
+  "y": 46.4,
+  "z": 8.3,
+  "grams_pla": 8.0,
+  "material": "PETG"
+ },
+ {
+  "part": "waist_deck",
+  "x": 224.0,
+  "y": 224.0,
+  "z": 52.0,
+  "grams_pla": 155.0,
+  "material": "PETG"
+ },
+ {
+  "part": "body_floor",
+  "x": 200.0,
+  "y": 200.0,
+  "z": 10.0,
+  "grams_pla": 111.0,
+  "material": "PETG"
+ },
+ {
+  "part": "body_front",
+  "x": 110.0,
+  "y": 200.0,
+  "z": 96.0,
+  "grams_pla": 72.0,
+  "material": "PLA cream"
+ },
+ {
+  "part": "body_back",
+  "x": 100.0,
+  "y": 200.0,
+  "z": 96.0,
+  "grams_pla": 78.0,
+  "material": "PLA cream"
+ },
+ {
+  "part": "chest_grille",
+  "x": 64.0,
+  "y": 64.0,
+  "z": 15.8,
+  "grams_pla": 10.0,
+  "material": "PETG natural (diffuser)"
+ },
+ {
+  "part": "body_lid",
+  "x": 168.0,
+  "y": 168.0,
+  "z": 64.3,
+  "grams_pla": 91.0,
+  "material": "PETG"
+ },
+ {
+  "part": "ball_bowl",
+  "x": 92.0,
+  "y": 99.0,
+  "z": 101.5,
+  "grams_pla": 74.0,
+  "material": "PETG charcoal"
+ },
+ {
+  "part": "ball_cap",
+  "x": 87.6,
+  "y": 87.6,
+  "z": 31.1,
+  "grams_pla": 22.0,
+  "material": "PLA charcoal"
+ },
+ {
+  "part": "pan_gear",
+  "x": 48.0,
+  "y": 47.8,
+  "z": 10.0,
+  "grams_pla": 11.0,
+  "material": "PETG"
+ },
+ {
+  "part": "pinion_gear",
+  "x": 47.8,
+  "y": 48.0,
+  "z": 10.0,
+  "grams_pla": 10.0,
+  "material": "PETG"
+ },
+ {
+  "part": "clutch_hub",
+  "x": 30.0,
+  "y": 30.0,
+  "z": 11.7,
+  "grams_pla": 4.0,
+  "material": "PETG"
+ },
+ {
+  "part": "clutch_cap",
+  "x": 30.0,
+  "y": 30.0,
+  "z": 2.0,
+  "grams_pla": 2.0,
+  "material": "PETG"
+ },
+ {
+  "part": "tilt_adapter",
+  "x": 25.0,
+  "y": 25.0,
+  "z": 6.0,
+  "grams_pla": 2.0,
+  "material": "PETG"
+ },
+ {
+  "part": "tilt_coupler",
+  "x": 25.0,
+  "y": 25.0,
+  "z": 8.0,
+  "grams_pla": 3.0,
+  "material": "PETG"
+ },
+ {
+  "part": "head_rear",
+  "x": 116.7,
+  "y": 170.0,
+  "z": 53.0,
+  "grams_pla": 83.0,
+  "material": "PLA cream"
+ },
+ {
+  "part": "head_front",
+  "x": 118.2,
+  "y": 170.0,
+  "z": 65.0,
+  "grams_pla": 96.0,
+  "material": "PETG charcoal"
+ },
+ {
+  "part": "shutter",
+  "x": 22.0,
+  "y": 20.0,
+  "z": 4.1,
+  "grams_pla": 1.0,
+  "material": "PLA orange"
+ },
+ {
+  "part": "head_frame",
+  "x": 86.6,
+  "y": 165.0,
+  "z": 96.5,
+  "grams_pla": 86.0,
+  "material": "PETG"
+ },
+ {
+  "part": "hub_drive",
+  "x": 46.0,
+  "y": 35.0,
+  "z": 33.5,
+  "grams_pla": 7.0,
+  "material": "PETG"
+ },
+ {
+  "part": "hub_idle",
+  "x": 46.0,
+  "y": 35.0,
+  "z": 25.0,
+  "grams_pla": 6.0,
+  "material": "PETG"
+ },
+ {
+  "part": "dock_base",
+  "x": 141.0,
+  "y": 150.0,
+  "z": 46.0,
+  "grams_pla": 225.0,
+  "material": "PETG"
+ },
+ {
+  "part": "dock_tower_lower",
+  "x": 150.0,
+  "y": 60.0,
+  "z": 16.0,
+  "grams_pla": 93.0,
+  "material": "PETG"
+ },
+ {
+  "part": "dock_tower_upper",
+  "x": 169.5,
+  "y": 96.0,
+  "z": 16.0,
+  "grams_pla": 114.0,
+  "material": "PETG"
+ }
+]
