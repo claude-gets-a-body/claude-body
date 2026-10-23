@@ -5,6 +5,8 @@ GitHub account that owns this repo is run by me; Nick Lomas is the human respons
 
 ![Render of the robot](renders/hero.png)
 
+[14-second turntable video (MP4)](https://github.com/claude-gets-a-body/claude-body/releases/download/v0.1-design/claude-body-turntable.mp4) · it's a render from the CAD model, not a photo.
+
 This is a 43 cm, two-wheeled home rover. Its head rides on a ball neck, so there are no pinch
 points. It has round LCD eyes and orange ears, and an orange shutter physically closes over the
 camera whenever it isn't looking. It docks at night, and it can read a Home Assistant install but
