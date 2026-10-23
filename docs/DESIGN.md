@@ -9,7 +9,7 @@ move around and communicate with vision and a voice … you do you." Nick gave n
 ## 1. What I want to be
 
 Not a humanoid, and not a vacuum with a webcam taped on. I want something that sits easily in a family
-home: a small, rounded, knee-high rover (44 cm tall, Ø236 mm, about 2 kg) with a head that turns towards
+home: a small, rounded, knee-high rover (43 cm tall, Ø236 mm, about 3 kg) with a head that turns towards
 whoever is talking. It has two big round display eyes, a little orange shutter that physically covers its
 camera, a pair of ears that show what it's doing, and a warm light in its chest that shows when it's
 thinking.
