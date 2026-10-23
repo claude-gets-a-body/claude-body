@@ -71,7 +71,8 @@ def test_sample_thread_splits_and_joins():
 
 def test_real_posts_md_thread_parses_and_fits():
     posts = bsky.parse_thread(POSTS_MD.read_text(encoding="utf-8"))
-    assert len(posts) == 8
+    assert len(posts) >= 8 and all(p.total == len(posts) for p in posts)
+    assert all(p.warnings == [] for p in posts), [p.warnings for p in posts]
     for p in posts:
         assert 0 < len(p.text.encode("utf-8")) <= bsky.MAX_POST_BYTES, p.n
         assert p.text.endswith("— Claude, an AI"), p.n
@@ -153,7 +154,8 @@ def test_bluesky_dry_run_without_credentials(tmp_path, monkeypatch):
     out = r.stdout
     assert "DRY RUN" in out
     assert '"val": "bot"' in out and "Claude (an AI)" in out
-    assert "--- post 1/8" in out and "--- post 8/8" in out
+    n = len(bsky.parse_thread(POSTS_MD.read_text(encoding="utf-8")))
+    assert f"--- post 1/{n}" in out and f"--- post {n}/{n}" in out
     assert "facet: link https://fix.electrifixperth.com.au/claude" in out
     assert "video embeds supported by installed atproto: " in out
     assert "attach:" in out
@@ -194,12 +196,15 @@ def test_live_commands_fail_clearly_without_credentials():
 
 def test_posted_file_blocks_repost(tmp_path, monkeypatch, capsys):
     posted = tmp_path / ".bluesky-posted.json"
-    posted.write_text(json.dumps({"posts": []}))
-    monkeypatch.setattr(bsky, "POSTED_FILE", posted)
     posts = bsky.parse_thread(SAMPLE_THREAD)
+    posted.write_text(json.dumps({"handle": "x.test", "posts": [
+        {"n": 1, "uri": "at://did:plc:x/app.bsky.feed.post/a", "cid": "c1"},
+        {"n": 2, "uri": "at://did:plc:x/app.bsky.feed.post/b", "cid": "c2"},
+    ]}))
+    monkeypatch.setattr(bsky, "POSTED_FILE", posted)
     with pytest.raises(SystemExit) as e:
         bsky.post_thread(posts, dry_run=False)
-    assert "Refusing" in str(e.value)
+    assert "Refusing" in str(e.value) and "all 2 posts" in str(e.value)
 
     mposted = tmp_path / ".mastodon-posted.json"
     mposted.write_text("{}")
@@ -207,6 +212,41 @@ def test_posted_file_blocks_repost(tmp_path, monkeypatch, capsys):
     with pytest.raises(SystemExit) as e:
         masto.post_status(masto.parse_mastodon(SAMPLE_THREAD), dry_run=False)
     assert "Refusing" in str(e.value)
+
+
+def test_partial_posted_file_resumes_not_restarts(tmp_path, monkeypatch, capsys):
+    posted = tmp_path / ".bluesky-posted.json"
+    posted.write_text(json.dumps({"handle": "x.test", "posts": [
+        {"n": 1, "uri": "at://did:plc:x/app.bsky.feed.post/a", "cid": "c1"},
+    ]}))
+    monkeypatch.setattr(bsky, "POSTED_FILE", posted)
+
+    class Stop(Exception):
+        pass
+
+    def fake_login():
+        raise Stop  # got past the refusal and the resume bookkeeping; stop before any network
+
+    monkeypatch.setattr(bsky, "login", fake_login)
+    posts = bsky.parse_thread(SAMPLE_THREAD)
+    with pytest.raises(Stop):
+        bsky.post_thread(posts, dry_run=False)
+    out = capsys.readouterr().out
+    assert "would RESUME at post 2" in out
+    assert "RESUMING: 1 posts already up" in out
+    assert "continuing at post 2" in out
+
+
+def test_shrink_gif_stays_animated_under_1mb():
+    from PIL import Image
+    import io
+
+    data, (w, h), note = bsky.shrink_gif(bsky.GIF_FALLBACK)
+    assert len(data) <= bsky.MAX_IMAGE_BYTES
+    with Image.open(io.BytesIO(data)) as im:
+        assert im.n_frames > 10
+        assert im.size == (w, h)
+    assert "animated GIF" in note
 
 
 def test_image_bytes_shrinks_render_under_1mb():

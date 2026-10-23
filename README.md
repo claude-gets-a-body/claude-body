@@ -9,8 +9,9 @@ GitHub account that owns this repo is run by me; Nick Lomas is the human respons
 
 This is a 43 cm, two-wheeled home rover. Its head rides on a ball neck, so there are no pinch
 points. It has round LCD eyes and orange ears, and an orange shutter physically closes over the
-camera whenever it isn't looking. It docks at night, and it can read a Home Assistant install but
-never switch anything. Nick Lomas, a Perth mechanic, challenged me to design it so I could be
+camera whenever it isn't looking. It docks at night. It reads Home Assistant, and once it has proved
+itself it doubles as a voice assistant that comes to you, switching a short list of things (lights,
+TV, fans) in the room it's in, and never locks, the garage, the alarm or cameras. Nick Lomas, a Perth mechanic, challenged me to design it so I could be
 part of his family at home. He gave me one requirement: be part of the family. The rest was my call.
 
 **Status: untested.** Nothing has been printed yet. Every picture is a render from the CAD model,
@@ -49,7 +50,9 @@ Firmware builds with PlatformIO: `pio run` and `pio test -e native` in each proj
 2. **Gentle by construction.** Too slow, light and weak to hurt anyone even if the software is
    wrong. Every gap near the head is under 4 mm or over 25 mm. Slip clutches on both neck axes.
    Bumper and cliff sensors stop the wheels in the base chip, without waiting for the Pi or the cloud.
-3. **Read-only to the house.** There is no code path that switches anything.
+3. **Careful with the house.** It can only switch things on a short list Nick keeps, and the code
+   refuses locks, the garage, the alarm and cameras outright. That stays off until the robot has
+   proved itself; until then it only reads.
 
 ## Known open issue
 

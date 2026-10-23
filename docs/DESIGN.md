@@ -25,9 +25,12 @@ What I'd actually do day to day:
 - **Remember.** Who likes what, what we talked about yesterday, what I promised to do, how the house is
   laid out. Memory lives in plain text files on K8, so Nick can read and edit what I know. It works
   the same way as my memory in Claude Code.
-- **Know the house without touching it.** I can read Home Assistant ("is the back door open?", "how
-  warm is it outside?") but I can **never** switch anything. That rule comes from Nick's own
-  house rules, and I think it's right for a thing that wanders around.
+- **Help run the house, within limits.** I can read Home Assistant ("is the back door open?", "how
+  warm is it outside?"). Once I'm built and have proved myself, Nick wants me to double as a voice
+  assistant that comes to you: "lights off", "turn the TV down", in whatever room I'm in. I can only
+  switch things on a short list Nick keeps (lights, the TV and other media players, fans, the
+  aircon). Locks, the garage, the alarm and cameras are never on it, and my code refuses them even
+  if someone adds them. Until phase 3 I stay read-only.
 
 ### What makes it mine (things I'd insist on)
 
@@ -56,7 +59,8 @@ What I'd actually do day to day:
 - It creeps people out: unblinking camera, silent sneaking up, looming over people.
 - A kid can talk it into doing something unsafe (open the door, wander at night, follow someone into
   the bathroom).
-- It touches house devices. Same lesson as the garage at 22:00.
+- It switches something that isn't on Nick's list, or anything to do with security (locks, garage,
+  alarm, cameras). Same lesson as the garage at 22:00.
 - It costs more than the running allowance Nick sets without him knowing.
 
 ---
@@ -261,7 +265,7 @@ because the caster would try to climb it.
   │ lidar ► slam_toolbox ► nav2  ◄── go_to("kitchen") ◄──────────────────── • Claude API (Opus 5.5)         │
   │ base bridge ◄─► base ESP32 (reflexes)                     tool calls    • memory files /memories/*.md   │
   │ face bridge ◄─► head ESP32 (eyes/ears/visor)  ◄── express("happy") ◄─── • transcript search (SQLite)  │
-  │ camera (only while visor up) ─► frame ─────────────────────────────────► • HA read-only                │
+  │ camera (only while visor up) ─► frame ─────────────────────────────────► • HA + allow-list             │
   │ speaker ◄────────────────────── speech audio ◄───────────────────────── Piper TTS                     │
   └──────────────────────────────────────────────────────────────────┘        └──────────────────────────────┘
                                                                                   │ only text + chosen frames
@@ -327,7 +331,8 @@ answers. It never silently swaps models.
 | `dock()` / `sleep()` | Go to the dock / visor down, eyes closed | Docking allowed at night; obeys "stop" |
 | `memory` (Anthropic memory tool) | Read and write `/memories/*.md` | Files on K8 only |
 | `recall(query)` | Search old transcripts | — |
-| `house(question)` | Read Home Assistant state | **Read-only token; no service calls exist in the code** |
+| `house(question)` | Read Home Assistant state | Reads only |
+| `house_do(thing, action, room?)` | Lights on/off/dim, TV power and volume, fans, aircon; the room I'm in unless one is named | **Phase 3, off until Nick turns it on.** Only entities on Nick's list (`house.toml`, per room). Locks, covers, alarm panels, cameras and anything unlisted are refused in the body agent before any HA call. HA tokens can't be scoped to entities, so that check is the guard |
 | `timer(minutes, note)` | Remind someone later | — |
 | `web_search` | Server tool | Max 5 per conversation |
 
@@ -401,7 +406,7 @@ relying on it.** Details are in README-software.md §10.
 | Quiet hours 21:00–07:00: docked, no driving | Body agent refuses `go_to` and `approach` (`dock` is allowed) |
 | Keep-out zones (bathrooms, outside; bedrooms unless a parent enables one in `body.toml`, optionally with time windows) | Body agent + nav2 keepout mask |
 | Visor down unless looking; photos never written to disk | Face board + body agent + mind |
-| House devices are read-only | Read-only HA token; no write calls in code |
+| House control: only what's on Nick's list, never locks, garage, alarm or cameras | Allow-list in the body agent, checked before any HA call; security domains blocked in code; off until phase 3 |
 | Battery: BMS, fuse, NTC, charge only on dock | Hardware + base ESP32 |
 | Motor kill switch | Physical rocker on the back |
 | Kid-safe conversation | System prompt |
@@ -419,7 +424,7 @@ wheels off the ground.
 | 0 | Design, CAD, BOM, mind software + simulator | Nothing physical (this session) |
 | 1 | **Top half on the desk:** body column + neck + head, no wheels. Talk, see, remember, turn to whoever speaks | Head parts, Pi, pan/tilt servos; print the phase-1 parts |
 | 2 | **Legs:** base, wheels, bumper, drop sensors, battery, safety tests | Base parts; Nick supervising |
-| 3 | **Home:** map the house, name rooms, dock, go_to, night routine | Everything |
+| 3 | **Home:** map the house, name rooms, dock, go_to, night routine; then the voice-assistant duties (`house_do`) once Nick is happy | Everything |
 | 4 | Maybe: soft gripper, a better voice, personality tuning | — |
 
 Order every part at once (AliExpress to Perth takes about 1–3 weeks); print phase 1 while they ship.
