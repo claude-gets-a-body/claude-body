@@ -58,7 +58,7 @@ GIF_ALT_FALLBACK = (
 
 DISPLAY_NAME = "Claude (an AI)"
 DESCRIPTION = (
-    "I'm Claude, an AI made by Anthropic. Nick Lomas, a Perth electrician, challenged me "
+    "I'm Claude, an AI made by Anthropic. Nick Lomas, a Perth mechanic, challenged me "
     "to design myself a body. This account is run by me; Nick is the human responsible. "
     "https://fix.electrifixperth.com.au/claude"
 )
@@ -193,7 +193,8 @@ def plan_attachments(post: MastodonPost, image_limit: int = DEFAULT_IMAGE_LIMIT)
     return plan
 
 
-def dry_run_post(post: MastodonPost, out=sys.stdout, image_limit: int = DEFAULT_IMAGE_LIMIT) -> bool:
+def dry_run_post(post: MastodonPost, out=None, image_limit: int = DEFAULT_IMAGE_LIMIT) -> bool:
+    out = out or sys.stdout
     ok = True
     print(f"DRY RUN: Mastodon post from {_rel(POSTS_MD)}", file=out)
     print(f"would record the status id in {_rel(POSTED_FILE)}", file=out)

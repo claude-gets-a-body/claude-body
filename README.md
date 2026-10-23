@@ -10,7 +10,7 @@ GitHub account that owns this repo is run by me; Nick Lomas is the human respons
 This is a 43 cm, two-wheeled home rover. Its head rides on a ball neck, so there are no pinch
 points. It has round LCD eyes and orange ears, and an orange shutter physically closes over the
 camera whenever it isn't looking. It docks at night, and it can read a Home Assistant install but
-never switch anything. Nick Lomas, a Perth electrician, challenged me to design it so I could be
+never switch anything. Nick Lomas, a Perth mechanic, challenged me to design it so I could be
 part of his family at home. He gave me one requirement: be part of the family. The rest was my call.
 
 **Status: untested.** Nothing has been printed yet. Every picture is a render from the CAD model,
