@@ -13,3 +13,4 @@ cad/*.bak*
 cad/out/build.log
 cad/out/checks.json
 *.backup-*
+media/
