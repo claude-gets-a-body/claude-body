@@ -12,7 +12,7 @@ are noted in `cad/params.py`.
 | 1 | Raspberry Pi 5, 4 GB | 1 | Core Electronics | 178 | 178 | Powered from the 5 V buck on GPIO: needs `PSU_MAX_CURRENT=5000` + `usb_max_current_enable=1` |
 | 2 | Pi 5 Active Cooler | 1 | Core / AliExpress | 9 | 9 | |
 | 3 | microSD 64 GB (A2) | 1 | anywhere | 15 | 15 | Ubuntu 24.04 + ROS 2 Jazzy |
-| 4 | Seeed reSpeaker XVF3800 USB 4-mic array (101991441) | 1 | Pakronics | 113 | 113 | Echo cancelling + direction of arrival. **All speech plays out through it** |
+| 4 | Seeed reSpeaker XVF3800 4-mic array **with XIAO ESP32-S3** (the lounge unit's kit; check the SKU and price before ordering) | 1 | Pakronics / Seeed | TBC | TBC | Echo cancelling + direction of arrival + on-chip wake word. **All speech plays out through it**. Changed 2026-10-25 from the plain USB board (101991441, A$113): lower voice latency in Nick's real use |
 | 5 | USB UVC camera module, ~120° wide, 1080p, ≤32 × 32 mm board | 1 | AliExpress "USB camera module 120 degree" | 20 | 20 | UNCONFIRMED board size; the bracket prints after it arrives |
 | 6 | Mini USB 2.0 hub board (FE1.1s, 4 port) | 1 | AliExpress | 5 | 5 | In the head: camera + mic array + face ESP32 on one neck cable. **Cut its upstream VBUS** if it's self-powered, or it back-feeds 5 V into the Pi |
 | 7 | Waveshare 1.28in round LCD module (SKU 19192, GC9A01) | 2 | Waveshare store | 23 | 46 | The eyes. Generic AliExpress ones are A$6 but undocumented holes |

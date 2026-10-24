@@ -216,9 +216,14 @@ in) or stay **over 25 mm** (a finger can't be trapped).
   the side wall at a 1.5 mm gap that opens up over the top curve. Soft TPU and a tiny servo, so
   they can't hurt anyone. Up = listening, back = sleepy,
   wiggle = happy.
-- **Microphones:** reSpeaker XVF3800 (Ø100 round board) under the top grille. It gives echo
-  cancellation (I can hear you while I'm talking) and **direction of arrival**, so I turn to whoever
-  spoke.
+- **Microphones:** reSpeaker XVF3800 (Ø100 round board) under the top grille, **the version with the
+  XIAO ESP32-S3 fitted**. It gives echo cancellation (I can hear you while I'm talking) and
+  **direction of arrival**, so I turn to whoever spoke. The XIAO runs the wake word on the chip
+  (microWakeWord) and streams speech straight to the mind over the ESPHome native API, and plays my
+  replies through the XVF's own amp. That's the same setup as the house's lounge voice unit. Nick
+  found it gives much lower wake-word and voice latency than Pi-based satellites (changed 2026-10-25,
+  his call from real use). The Pi 5 is out of the voice path entirely: it keeps lidar, navigation
+  and the camera.
 - **Touch:** a capacitive pad under the top shell for head pats.
 - One USB cable comes up the neck to a small hub in the head for the camera, mic array and face
   board.
@@ -260,7 +265,7 @@ because the caster would try to climb it.
 
 ```
   ┌──────────── ROBOT (Pi 5, Ubuntu 24.04 + ROS 2 Jazzy) ───────────┐        ┌──── K8 (always on) ─────────────┐
-  │ wake word (local, "Hey Claude")  ─► voice clip ───────────────────────► whisper STT (own instance)       │
+  │ XIAO on XVF3800: wake word + voice ─► voice clip ────────────────────► whisper STT (own instance)       │
   │ lidar people (anonymous) + voice direction ─► "someone, 1.4 m, left" ─► MIND service               │
   │ lidar ► slam_toolbox ► nav2  ◄── go_to("kitchen") ◄──────────────────── • Claude API (Opus 5.5)         │
   │ base bridge ◄─► base ESP32 (reflexes)                     tool calls    • memory files /memories/*.md   │
