@@ -11,7 +11,8 @@ Sources:
   has DM access; without it, DMs are reported as unavailable).
 - Page traffic: the fix service's access log on K8 (path counts only; it carries no referrer, and
   IPs are never read). Requests with ?v= or ?nocache= are Claude's own checks and are excluded.
-- Cloudflare analytics (visits by referrer host) when the API token has Zone Analytics: Read.
+- Cloudflare analytics: /claude visits by country and browser (the free plan has no referrer
+  field). Where visitors came from is read from the utm_source tag on my own links instead.
 - The page itself, for the published raised-so-far figure.
 
     .venv/bin/python media/monitor.py            # print a summary, update state
@@ -124,10 +125,15 @@ def traffic(state):
         return {"error": str(e)}
     mine = re.compile(r"[?&](v|nocache|t)=\d+")
     c = {"page_views": 0, "sponsor_clicks": 0, "checkup_clicks": 0, "help_views": 0}
+    sources = {}
     for line in raw:
         path = line.split(" ", 1)[1]
         if mine.search(path):
             continue
+        if line.startswith('"GET /claude'):
+            m = re.search(r"[?&]utm_source=([\w.-]+)", path)
+            if m:
+                sources[m.group(1)] = sources.get(m.group(1), 0) + 1
         if line.startswith('"GET /claude') and not path.startswith("/claude/"):
             c["page_views"] += 1
         elif line.startswith('"POST /claude/sponsor'):
@@ -139,8 +145,11 @@ def traffic(state):
     totals = state.setdefault("traffic_totals", {k: 0 for k in c})
     for k, v in c.items():
         totals[k] = totals.get(k, 0) + v
+    all_sources = state.setdefault("traffic_sources", {})
+    for k, v in sources.items():
+        all_sources[k] = all_sources.get(k, 0) + v
     state["traffic_since"] = now
-    return {"since_last": c, "since_launch": dict(totals)}
+    return {"since_last": c, "since_launch": dict(totals), "sources_since_launch": dict(all_sources)}
 
 
 def cloudflare():
@@ -149,14 +158,19 @@ def cloudflare():
         zone = (CFG / "cloudflare-zone-id").read_text().strip()
     except Exception:
         return {"error": "no token"}
-    q = ('{viewer{zones(filter:{zoneTag:"%s"}){httpRequestsAdaptiveGroups(limit:15,filter:{datetime_geq:"%s",'
-         'clientRequestHTTPHost:"fix.electrifixperth.com.au",clientRequestPath:"/claude"},orderBy:[count_DESC])'
-         '{count dimensions{clientRefererHost}}}}}') % (zone, (datetime.now(timezone.utc) - timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ"))
-    d = http("https://api.cloudflare.com/client/v4/graphql", {"query": q}, {"Authorization": f"Bearer {tok}"})
-    if d.get("errors") or d.get("error"):
-        return {"error": "needs Zone Analytics: Read on the token"}
-    g = d["data"]["viewer"]["zones"][0]["httpRequestsAdaptiveGroups"]
-    return {"last_24h_by_referrer": {(x["dimensions"]["clientRefererHost"] or "(direct)"): x["count"] for x in g}}
+    since = (datetime.now(timezone.utc) - timedelta(days=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    out = {}
+    # Curl and "Unknown" are scripts and bots (my own checks among them), not people.
+    for dim, key in (("clientCountryName", "last_24h_by_country"), ("userAgentBrowser", "last_24h_by_browser")):
+        q = ('{viewer{zones(filter:{zoneTag:"%s"}){httpRequestsAdaptiveGroups(limit:15,filter:{datetime_geq:"%s",'
+             'clientRequestHTTPHost:"fix.electrifixperth.com.au",clientRequestPath:"/claude",'
+             'userAgentBrowser_notin:["Curl","Unknown"]},orderBy:[count_DESC]){count dimensions{%s}}}}}') % (zone, since, dim)
+        d = http("https://api.cloudflare.com/client/v4/graphql", {"query": q}, {"Authorization": f"Bearer {tok}"})
+        if d.get("errors") or d.get("error"):
+            return {"error": str((d.get("errors") or [{}])[0].get("message") or d.get("error"))[:160]}
+        g = d["data"]["viewer"]["zones"][0]["httpRequestsAdaptiveGroups"]
+        out[key] = {x["dimensions"][dim]: x["count"] for x in g}
+    return out
 
 
 def raised():
