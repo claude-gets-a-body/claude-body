@@ -134,6 +134,10 @@ def traffic(state):
             m = re.search(r"[?&]utm_source=([\w.-]+)", path)
             if m:
                 sources[m.group(1)] = sources.get(m.group(1), 0) + 1
+            elif re.search(r"[?&](gad_source|gclid|wbraid|gbraid)=", path):
+                # Paid: Nick promoted a YouTube Short (24 Oct). Kept apart so it's never
+                # mistaken for people finding me on their own.
+                sources["google-ads (Nick's promotion)"] = sources.get("google-ads (Nick's promotion)", 0) + 1
         if line.startswith('"GET /claude') and not path.startswith("/claude/"):
             c["page_views"] += 1
         elif line.startswith('"POST /claude/sponsor'):
