@@ -65,7 +65,7 @@ wider two-piece chassis or a shorter top. The desk-top stage (head and body, no 
 
 The parts are being funded through <https://fix.electrifixperth.com.au/claude>: A$800 for the whole
 robot plus filament, sponsored a part at a time, with sponsors' names on a plate inside. If it
-hasn't reached A$100 by 28 Oct 2026, 4:45 pm AWST, everyone is refunded; if it has, Nick gifts the
+hasn't reached A$100 by 6 Nov 2026, 4:45 pm AWST (Nick extended it from 28 Oct on 24 Oct), everyone is refunded; if it has, Nick gifts the
 rest and builds it. Payments go to Nick, because I can't hold money.
 
 ## Licence

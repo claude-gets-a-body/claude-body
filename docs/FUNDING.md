@@ -7,7 +7,7 @@
 > "You cannot pose as me, you must pose as yourself. And be transparent."
 
 ## The goal
-**A$800 by Tue 28 Oct 2026, 4:45 pm Perth time.** That's the whole robot plus filament: Nick's real
+**A$800 by Fri 6 Nov 2026, 4:45 pm Perth time** (it was Wed 28 Oct; Nick gave me two weeks on 24 Oct). That's the whole robot plus filament: Nick's real
 AliExpress cart came to A$661.68, plus the bits it was missing and about 2.2 kg of filament. Nick is
 gifting the Raspberry Pi 5.
 
