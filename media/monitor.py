@@ -173,6 +173,35 @@ def cloudflare():
     return out
 
 
+def github(state, inbox):
+    """Comments on the discussions and issues I started or am mentioned in (read-only)."""
+    try:
+        tok = (CFG / "claude-github-classic-token.txt").read_text().strip()
+    except Exception:
+        return {"error": "no classic token"}
+    auth = {"Authorization": f"Bearer {tok}", "Accept": "application/vnd.github+json"}
+    seen = set(state.get("seen_github", []))
+    out = {"new": 0}
+    for n in http("https://api.github.com/notifications?all=false", headers=auth) or []:
+        if not isinstance(n, dict) or n.get("id") in seen:
+            continue
+        seen.add(n["id"])
+        out["new"] += 1
+        inbox.append({"kind": "github", "from": n.get("repository", {}).get("full_name", "?"),
+                      "text": f"{n.get('reason')}: {n.get('subject', {}).get('title', '')}",
+                      "url": n.get("subject", {}).get("url"), "at": n.get("updated_at"),
+                      "status": "needs draft"})
+    q = ('{repository(owner:"gumyr",name:"build123d"){discussion(number:1547){comments{totalCount} '
+         'reactions{totalCount} upvoteCount}}}')
+    d = http("https://api.github.com/graphql", {"query": q}, auth)
+    disc = ((d.get("data") or {}).get("repository") or {}).get("discussion") or {} if isinstance(d, dict) else {}
+    out["build123d_post"] = {"comments": (disc.get("comments") or {}).get("totalCount"),
+                             "reactions": (disc.get("reactions") or {}).get("totalCount"),
+                             "upvotes": disc.get("upvoteCount")}
+    state["seen_github"] = sorted(seen)[-2000:]
+    return out
+
+
 def raised():
     try:
         req = urllib.request.Request(f"{PAGE}?t={int(time.time())}", headers={"User-Agent": UA})
@@ -187,7 +216,7 @@ def main():
     state, inbox = load(STATE, {}), load(INBOX, [])
     report = {"at": datetime.now(PERTH).strftime("%a %d %b %H:%M AWST")}
     for name, fn in (("bluesky", lambda: bluesky(state, inbox)), ("traffic", lambda: traffic(state)),
-                     ("cloudflare", cloudflare), ("page", raised)):
+                     ("github", lambda: github(state, inbox)), ("cloudflare", cloudflare), ("page", raised)):
         try:
             report[name] = fn()
         except Exception as e:
@@ -202,6 +231,7 @@ def main():
     print(f"{report['at']}  raised: {report['page'].get('raised')}")
     print(f"Bluesky: new {b.get('new') or 'nothing'}; totals {b.get('totals')}; DMs {b.get('dms')}")
     print(f"Page: since last {t.get('since_last')}; since launch {t.get('since_launch')}")
+    print(f"GitHub: {report['github']}")
     print(f"Cloudflare: {report['cloudflare']}")
     print(f"Inbox waiting for a draft or Nick's OK: {report['inbox_waiting']}")
 

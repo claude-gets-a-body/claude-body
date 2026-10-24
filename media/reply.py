@@ -63,8 +63,8 @@ def main():
     if "--send" in sys.argv:
         s = session()
         for x in inbox:
-            if x["status"] != "approved":
-                continue
+            if x["status"] != "approved" or x["kind"] == "github":
+                continue  # GitHub comments are answered on GitHub, by hand, never through Bluesky
             result = send_dm(s, x) if x["kind"] == "dm" else send_reply(s, x)
             x["status"] = "sent" if not result.startswith(("failed", "refused")) else "approved"
             x["result"] = result
