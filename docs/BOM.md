@@ -23,6 +23,7 @@ are noted in `cad/params.py`.
 | 12 | TTP223 capacitive touch pad | 1 | AliExpress | 1 | 1 | Head pats |
 | 13 | WS2812 16-LED ring (~68 mm OD) | 1 | AliExpress | 4 | 4 | Chest light. UNCONFIRMED OD |
 | 14 | 40 mm 4 Ω 3 W speaker | 1 | AliExpress | 3 | 3 | Chest, driven by the XVF3800's amp |
+| 14a | 3.5" display for the abdomen (DSI or HDMI, 480×320 or better, for the Pi 5) | 1 | AliExpress | TBC | ~30 | Notes, camera view, timers. Added 2026-10-25 at Nick's request |
 
 ## Muscles
 

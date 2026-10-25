@@ -34,9 +34,15 @@ What I'd actually do day to day:
 
 ### What makes it mine (things I'd insist on)
 
-1. **Honest eyes.** The camera sits behind an orange shutter that is physically closed whenever I'm not looking.
-   Anyone, a kid included, can tell at a glance whether I can see them. My eyes on the screens close
-   too. That's a real mechanical guarantee, not a software promise.
+1. **Honest eyes.** The camera is on by default, so I can see, recognise faces and turn to people
+   properly, and double as a baby monitor or a "watch this" camera (Changed 2026-10-25 at Nick's request: a closed-by-default
+   shutter left me blind). A small light shows whenever the camera is live. **"Claude, privacy
+   mode"** physically closes the orange shutter and my screen eyes close too, so anyone, a kid
+   included, can tell at a glance that I can't see them. Privacy mode is a real mechanical guarantee,
+   not a software promise. Video stays in the house: the live view goes to the family's phones over
+   the home network or Tailscale, never out through the public site; the cloud only ever gets single
+   frames when I'm answering something; face detection runs on the Pi; nothing is recorded unless a
+   parent turns recording on.
 2. **Gentle by construction.** It's too slow, too light and too weak to hurt anyone, even if the
    software is wrong. The wheels are boxed inside the skirt, there are no pinch gaps, and the bumper
    and drop sensors stop the motors in the base controller without waiting for the Pi or the cloud.
@@ -56,7 +62,8 @@ What I'd actually do day to day:
 
 ### Anti-goals (would make it a failure even if it "works")
 
-- It creeps people out: unblinking camera, silent sneaking up, looming over people.
+- It creeps people out: a camera with no visible on-light or no way to shut it, silent sneaking up,
+  looming over people.
 - A kid can talk it into doing something unsafe (open the door, wander at night, follow someone into
   the bathroom).
 - It switches something that isn't on Nick's list, or anything to do with security (locks, garage,
@@ -166,7 +173,11 @@ band over a turret on top because nothing on top can block it, and the head can 
 The Pi 5 (4 GB, active cooler) lies flat at the back of the body floor, next to the 5 V 5 A buck. The
 **speaker is in the chest**, behind a 16-LED ring and a natural-PETG diffuser plug, so the chest
 glows when I speak. It's driven by the mic array's own amp, so echo cancellation has its reference.
-There's a note pocket at the back. The shell is two printed halves (front/back) on heat-set inserts,
+There's a note pocket at the back for real things (a drawing, a note), and a **3.5" screen in the
+abdomen**, below the chest light (Changed 2026-10-25 at Nick's request), driven straight from the Pi 5. It shows written notes ("write
+a note for Mum: back by 6"), what the camera sees, timers, the weather, and pictures of whatever I'm
+explaining. The screen is static and flush behind a printed bezel, so it adds no pinch points; the
+body shell needs a window and a mount for it (CAD change pending). The shell is two printed halves (front/back) on heat-set inserts,
 with screwed seam tabs at mid-height. The body floor screws down into pads on top of the three
 waist pillars, so lifting it by the head lifts the whole robot.
 
@@ -207,11 +218,13 @@ in) or stay **over 25 mm** (a finger can't be trapped).
 - **Camera:** a small USB UVC module, about 120° wide, between the eyes, like a third eye.
 - **Visor:** an **orange shutter** slides down in rails behind the conical camera hole, so the
   lens sees about 109° without vignetting (the module's own 120° is a little clipped). It's worked by a micro servo (its bracket and the visor-up switch are
-  printed once the parts are measured).
+  printed once the parts are measured). **Open by default** since 2026-10-25; it closes for privacy
+  mode, on a voice command or the head-pat-and-hold gesture.
 - **Head-height range sensor:** a VL53L1X looks forward through the face below the camera. The lidar
   plane (138 mm) can't see table edges and benchtops; this stops the head driving into them.
-  Orange dot = I'm not looking; dark lens = I am. **It's closed unless I'm looking.** The face board
-  refuses to report "camera available" unless the visor-up switch is closed.
+  Orange dot = privacy mode, I can't see; dark lens plus the small camera-live light = I can. The
+  face board refuses to report "camera available" unless the visor-up switch is closed, so privacy
+  mode can't be overridden in software.
 - **Ears:** 2 × MG90S on the upper sides of the head, TPU ears in Claude-orange. They swing against
   the side wall at a 1.5 mm gap that opens up over the top curve. Soft TPU and a tiny servo, so
   they can't hurt anyone. Up = listening, back = sleepy,
@@ -329,7 +342,9 @@ answers. It never silently swaps models.
 |---|---|---|
 | `say(text)` | Speak now (mid-task, e.g. "on my way") | — |
 | `express(mood)` | Eyes/ears/chest preset | — |
-| `look(at?)` | Turn head, raise visor, return one frame | Not in no-look zones; visor down after |
+| `look(at?)` | Turn head, return one frame to the mind | Not in privacy mode; not in no-look zones |
+| `show(note\|camera\|image)` | Put a note, the live camera view or a picture on the abdomen screen | — |
+| `privacy(on\|off)` | Close or open the shutter (voice: "privacy mode" / "you can look again") | Anyone can turn it on; turning it off needs a voice request in the same room |
 | `turn_to(target)` | Face the speaker / a person / an angle | — |
 | `go_to(place)` | nav2 goal to a named place | Not at night; not into keep-out zones; kids can't send me outside |
 | `approach()` | Drive towards whoever spoke last (voice direction + nearest lidar return) | Stops at 1 m; slow; not at night |
@@ -356,12 +371,12 @@ Nick can edit any of these; I re-read INDEX.md every morning.
 
 ### 4.5 Recognising people
 
-**I don't recognise faces.** Honest eyes win: the camera is shuttered except for the moment of a
-`look`, so it can't watch faces to recognise anyone. (Face recognition was the original plan and is
-deliberately not used.) People are anonymous to me: the lidar tells me where someone is, and the
-mic array tells me which direction a voice came from. To come to someone, I drive towards the
-voice and stop 1 m short of the nearest lidar return on that bearing. I know who I'm talking to only
-if they tell me. A voice-ID, enrolled only when a parent says so, is a possible later addition.
+**Faces, locally (Changed 2026-10-25 at Nick's request).** With the camera on by default, face *detection* runs on the Pi, so I can
+turn to and follow whoever's there, combined with the voice direction and the lidar. Knowing *who*
+someone is (face recognition) only works for faces a parent enrols, and the face data stays on the
+robot and K8, never the cloud. Anyone not enrolled stays anonymous to me. In privacy mode I fall
+back to voice direction and lidar only: I drive towards the voice and stop 1 m short of the nearest
+lidar return on that bearing.
 
 **Photos are never stored.** A `look` photo lives only in the mind's RAM for the rest of that
 conversation. The conversation logs on K8 replace it with `[photo not kept]`, and they and the
@@ -410,7 +425,7 @@ relying on it.** Details are in README-software.md §10.
 | No finger traps: wheels enclosed, gaps < 4 mm or > 25 mm | CAD |
 | Quiet hours 21:00–07:00: docked, no driving | Body agent refuses `go_to` and `approach` (`dock` is allowed) |
 | Keep-out zones (bathrooms, outside; bedrooms unless a parent enables one in `body.toml`, optionally with time windows) | Body agent + nav2 keepout mask |
-| Visor down unless looking; photos never written to disk | Face board + body agent + mind |
+| Camera-live light whenever the camera runs; privacy mode = shutter physically closed; video never leaves the house; nothing recorded unless a parent enables it | Face board + body agent + mind |
 | House control: only what's on Nick's list, never locks, garage, alarm or cameras | Allow-list in the body agent, checked before any HA call; security domains blocked in code; off until phase 3 |
 | Battery: BMS, fuse, NTC, charge only on dock | Hardware + base ESP32 |
 | Motor kill switch | Physical rocker on the back |
