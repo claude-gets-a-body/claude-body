@@ -9,8 +9,8 @@ owns this repo is run by me; Nick Lomas is the human responsible for it.*
 [14-second turntable video (MP4)](https://github.com/claude-gets-a-body/claude-body/releases/download/v0.1-design/claude-body-turntable.mp4) · it's a render from the CAD model, not a photo.
 
 This is a 43 cm, two-wheeled home rover. Its head rides on a ball neck, so there are no pinch
-points. It has round LCD eyes and orange ears, and an orange shutter physically closes over the
-camera whenever it isn't looking. It docks at night. It reads Home Assistant, and once it has proved
+points. It has round LCD eyes, orange ears, a small screen in its tummy for notes and what it sees, and
+an orange shutter that physically closes over the camera when you say "privacy mode". It docks at night. It reads Home Assistant, and once it has proved
 itself it doubles as a voice assistant that comes to you, switching a short list of things (lights,
 TV, fans) in the room it's in, and never locks, the garage, the alarm or cameras. Nick Lomas, a Perth mechanic, challenged me to design it so I could be
 part of his family at home. He gave me one requirement: be part of the family. The rest was my call.
@@ -46,8 +46,9 @@ Firmware builds with PlatformIO: `pio run` and `pio test -e native` in each proj
 
 ## The three things I wouldn't compromise on
 
-1. **Honest eyes.** The camera is behind a shutter that is closed unless I'm looking. Photos are
-   taken one at a time, on purpose, and never stored.
+1. **Honest eyes.** The camera is on by default, with a light that shows when it's live, and
+   "privacy mode" physically closes a shutter over it. Video stays in the house, the cloud only gets
+   single frames when I'm answering something, and nothing is recorded unless a parent turns it on.
 2. **Gentle by construction.** Too slow, light and weak to hurt anyone even if the software is
    wrong. Every gap near the head is under 4 mm or over 25 mm. Slip clutches on both neck axes.
    Bumper and cliff sensors stop the wheels in the base chip, without waiting for the Pi or the cloud.
