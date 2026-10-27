@@ -13,10 +13,12 @@ are noted in `cad/params.py`.
 | 2 | Pi 5 Active Cooler | 1 | Core / AliExpress | 9 | 9 | |
 | 3 | microSD 64 GB (A2) | 1 | anywhere | 15 | 15 | Ubuntu 24.04 + ROS 2 Jazzy |
 | 4 | Seeed reSpeaker XVF3800 4-mic array **with XIAO ESP32-S3** (the lounge unit's kit; check the SKU and price before ordering) | 1 | Pakronics / Seeed | TBC | TBC | Echo cancelling + direction of arrival + on-chip wake word. **All speech plays out through it**. Changed 2026-10-25 from the plain USB board (101991441, A$113): lower voice latency in Nick's real use |
-| 5 | USB UVC camera module, ~120° wide, 1080p, ≤32 × 32 mm board | 1 | AliExpress "USB camera module 120 degree" | 20 | 20 | UNCONFIRMED board size; the bracket prints after it arrives |
+| 5 | USB UVC camera, **IMX291 2MP 1080p, 130° M12 lens**, 4-pin 2.0 mm header (5 V, D−, D+, GND) | 1 | AliExpress | 57 | 57 | **Ordered 27 Oct (Nick).** Board looks 38 × 38 mm (not 32): widen the eye spacing to fit. Make a short lead to the neck hub. Bracket printed after it arrives |
 | 6 | Mini USB 2.0 hub board (FE1.1s, 4 port) | 1 | AliExpress | 5 | 5 | In the head: camera + mic array + face ESP32 on one neck cable. **Cut its upstream VBUS** if it's self-powered, or it back-feeds 5 V into the Pi |
-| 7 | Waveshare 1.28in round LCD module (SKU 19192, GC9A01) | 2 | Waveshare store | 23 | 46 | The eyes. Generic AliExpress ones are A$6 but undocumented holes |
-| 8 | ESP32-S3-DevKitC-1 N8R2 | 2 | AliExpress (Espressif store) | 12 | 24 | One in the base (reflexes), one in the head (face) |
+| 7 | **Waveshare ESP32-S3-DualEye LCD 1.28 (No Touch)**: ESP32-S3R8 (16 MB flash, 8 MB PSRAM) + 2 × 240×240 round IPS, splittable with an 18-pin FPC | 1 | AliExpress | 28 | 28 | **Ordered 27 Oct (Nick).** Replaces the 2 separate LCDs AND the head ESP32. Header exposes I²C + UART + GPIO0 only, so ears/shutter go on the PCA9685 (7a). Measure before redoing the eye mounts |
+| 7a | PCA9685 16-channel PWM/servo board (I²C) | 3 | AliExpress | 7 | 21 | **Ordered 27 Oct (Nick), 3-pack.** 1 in the head (2 ears + shutter), 2 spares |
+| 7b | Google Coral USB Accelerator (Edge TPU) | 1 | Nick's spare (ex-workshop Pi 5) | 0 | 0 | On-robot person/face/floor-object detection, about 2 W; frames stay local. Own 5 V 3 A buck (not the Pi's USB budget); needs airflow. libedgetpu/pycoral need community builds on Ubuntu 24.04 / Py3.12, or run it in a container like Frigate did |
+| 8 | ESP32-S3-DevKitC-1 N16R8 (two USB-C; RGB LED on GPIO48) | 3 | AliExpress | 12 | 36 | Base (reflexes), head (face), 1 spare. **Ordered 27 Oct (Nick).** Octal PSRAM: GPIO35–37 are NOT free. Base talks to the Pi over native USB only, no Wi-Fi in the safety loop |
 | 9 | LDROBOT STL-19P lidar ("D500 kit") | 1 | AliExpress 1005013215151320 | 97 | 97 | The LD19 is discontinued; same footprint |
 | 10 | VL53L1X time-of-flight breakout | 6 | AliExpress (generic) or Pololu #3415 | 7 | 42 | 3 down (drops), 2 forward (toys), 1 in the face (table edges). **≥ 40 mm minimum range**, already designed in |
 | 11 | BNO085 IMU breakout | 1 | AliExpress | 25 | 25 | Tilt/fall detection; MPU-6050 (A$3) works as a fallback |
@@ -30,6 +32,7 @@ are noted in `cad/params.py`.
 | # | Part | Qty | Where | Each | Line | Notes |
 |---|---|---|---|---|---|---|
 | 15 | Feetech STS3215 **12 V** (C018 or C047, 1:345, 30 kg·cm) | 4 | AliExpress / Core (A$33.55) | 37 | 148 | 2 wheels, neck pan, head tilt. **Not** the 7.4 V version |
+| 15a | Wheel motor drivers: **2 × TI DRV8874** carrier (4.5–37 V, 2.1 A continuous, current-sense IPROPI output to the base ESP32 for stall detection) | 2 | Pololu #4035 via Core, or clones | 15 | 30 | **Not ordered yet: first count the vacuum wheel-module wires** (2 thick + 4 thin = brushed with encoder, so DRV8874; 3 thick + hall wires = brushless, so a BLDC driver). If stall current is well over 2 A, use a Cytron MDD10A. Not the DRV8833 (10.8 V max) |
 | 16 | Waveshare Bus Servo Adapter (A) | 1 | Core (A$7.75) | 8 | 8 | UART jumper = A |
 | 17 | MG90S metal-gear micro servo | 3 | AliExpress | 4 | 12 | 2 ears + visor shutter |
 | 18 | Micro switch, roller lever | 2 | AliExpress | 1 | 2 | Bumper |

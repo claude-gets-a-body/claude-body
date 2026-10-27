@@ -93,6 +93,13 @@ which is the part Nick's printer is good at.
 **Fallback:** if the drive base fights us, the head and mind are unchanged on any base. A Valetudo
 vacuum can carry the head on a short stand in a pinch.
 
+**Update, 27 Oct 2026: harvest a vacuum, keep my own base.** A lidar robot vacuum (a MyGenie Laser
+Smart Pro IQ360) is on its way. It won't be hacked whole: its parts come out (the drive wheel
+modules, the lidar, the cliff sensors) and go into a base we design around them, with a bigger
+4S pack. That keeps everything above (my own height, my own motion control, no rooting) and saves
+buying those parts. Unknowns until it's opened: the lidar model and protocol, brushed or brushless
+wheel motors (count the wires), and the encoder type. The base CAD waits until they're measured.
+
 ---
 
 ## 3. The body
@@ -307,8 +314,27 @@ would evict the pinned voice model.
 
 ### 4.2 Claude API usage (my calls; Nick can change any of them)
 
-- **Model:** `claude-opus-5-5` for everything I say and decide, effort `low` for chat and `medium` when
-  a task has several steps. Refusal fallback is on (`fallbacks: "default"`).
+- **Model, by job (changed 27 Oct 2026):** `claude-haiku-5-5` for everyday back-and-forth (thinking
+  set low or off for chat: it's slower and billed as output). A bigger model (`claude-sonnet-5-5`,
+  or `claude-opus-5-5` for something genuinely hard) only when the conversation calls for it, by an
+  explicit routing rule, logged, and always within the daily cap. Refusal fallback is on
+  (`fallbacks: "default"`).
+- **Streaming, so I talk while I think:** the reply streams token by token; each finished sentence
+  goes straight to Piper, and sentence 1 plays while sentence 2 is still being written. The ears and
+  eyes react the moment speech ends (about 0.4 s), and short acknowledgements ("mm-hm", "one sec")
+  are pre-made Piper clips, so the first sound needs no model at all. Barge-in: the XVF3800's echo
+  cancelling hears you over me, and speaking stops my reply mid-sentence. Slow tools get a spoken
+  "let me check" first. Target from the end of your speech: first sound under 0.5 s, first words
+  about 1.5–2 s (speech end ~0.4 s, Parakeet ~0.6 s, first streamed sentence ~0.5–0.8 s, Piper
+  ~0.1–0.2 s).
+- **Speech to text:** Parakeet TDT 0.6B v2 on the home server, the same engine the house's lounge voice
+  unit uses (20/20 test clips, median 0.59 s on CPU), with whisper.cpp as fallback. Not the house's
+  domain-tuned Whisper. Parakeet has no word-bias prompt, so names get a small local
+  post-correction list if they come out wrong.
+- **The home server's local 8B model is NOT my brain.** It's shared with the house voice and other
+  services, and a different model answering as "Claude" would be speaking in my name. It's only an
+  honest, labelled offline fallback ("my cloud brain's offline, this is my backup") for docking,
+  timers and goodnight.
 - **Background jobs** (summarising the day into the diary, tidying memory): the same model, but run
   overnight through the Batch API, which is half price.
 - **Prompt caching:** the system prompt + tool list + memory index form a frozen prefix with a 1 h cache.
@@ -321,7 +347,15 @@ would evict the pinned voice model.
   (about 1,000 tokens), and sends it. No video.
 - **Web search** (server tool) for kids' questions, capped at 5 searches per conversation.
 
-**Budget (estimate, to be measured; API prices are in US$):** new tokens go into the 1-hour cache,
+**Budget with Haiku as the default (27 Oct 2026 estimate, prices from the API reference: Haiku 5.5
+US$0.10/M in, US$0.50/M out, cache reads US$0.01/M; check the live pricing page before relying on
+it):** about US$0.0003 a turn (~15 k cached context, ~500 new tokens, ~100–150 out). A normal family
+day of ~200 turns is about US$0.06; flat out all day (~1,000 turns) about US$0.30, or ~US$1 with
+camera frames and tools. So roughly A$3–15 a month. Prompt caching is what makes it that cheap;
+the bigger models are where the money goes, so the router keeps them for hard questions and the
+governor caps the day (suggested A$2/day).
+
+**The earlier all-Opus budget, kept for comparison (estimate, to be measured; API prices are in US$):** new tokens go into the 1-hour cache,
 so they're billed as cache writes at $8/M rather than $4/M. A plain chat exchange works out at
 about US$0.014, and one that uses tools up to US$0.04. The most expensive single event is the cache
 going cold after an hour idle (about US$0.16 to rebuild 20 k tokens of history), which happens a few
