@@ -43,8 +43,8 @@ are noted in `cad/params.py`.
 | # | Part | Qty | Where | Each | Line | Notes |
 |---|---|---|---|---|---|---|
 | 19 | 18650 cells (Molicel P28A / Samsung 35E class) | 6 | local | 8 | 48 | 3S2P, about 65 Wh |
-| 20 | 3S 20 A BMS with balance | 1 | AliExpress | 5 | 5 | |
-| 21 | 10 k B3950 NTC | 1 | AliExpress | 1 | 1 | On the pack, read by the base ESP32 |
+| 20 | **4S smart BMS with UART** — **Ordered 29 Oct: Daly 4–8S UART+BT 30 A** | 1 | AliExpress | 23 | 23 | Was a plain 3S; the pack is 4S now. UART to the base ESP32 gives per-cell volts, current, real SOC, temp and fault reason. Set 4S + Li-ion in the app BEFORE any load (may ship as LiFePO4). Check its size against the base. Check first whether the pack already has one inside. Not a stack of 1S DW01/8205 boards (20 V FETs, ~3 A trip, no balance) |
+| 21 | 10 k B3950 NTC | 1 | AliExpress | 1 | 1 | On the pack, read by the base ESP32. **Not needed with the smart BMS (it has its own probe)** |
 | 22 | Blade fuses + inline holders: 7.5 A (servo branch), 3 A (Pi buck branch) | 2 | Jaycar | 4 | 8 | A stalled wheel must not take the brain down **On hand.** |
 | 22a | 1000 µF 16 V low-ESR electrolytic | 1 | Jaycar | 2 | 2 | On the buck output: the Pi on GPIO has no input protection **On hand.** |
 | 23 | Rocker switch, 19 × 13 mm cut-out | 1 | Jaycar | 2 | 2 | Motor kill (cuts servo power only) **On hand.** |
@@ -66,7 +66,7 @@ are noted in `cad/params.py`.
 | 31 | M3 heat-set inserts (Ruthex-style, hole Ø4.0) | 100 | — | 10 | **Ordered 28 Oct: brass insert kit (M2/M3, 300 pcs).** Measure the M3 OD/length and set `M3_INSERT_D`/`M3_INSERT_DEPTH` in params.py to match. |
 | 32 | M3 / M2.5 / M2 screw assortments | 3 | 10 | 30 | Incl. a **D4 × M3 shoulder screw, ~4 mm shoulder** for the tilt clutch (buy 4 and 6 mm; the coupler floor gets set to suit, and its hole opens to 4.2 for the shoulder) **Ordered 28 Oct: hex socket cap kit, M2–M6, 2220 pcs**, with nuts and washers. Shoulder screws (D4 × M3, 4 + 6 mm) bought separately. M2.5 brass standoffs: **on hand.** |
 | 33 | Compression springs 5 × 15 mm | 2 | — | 5 | Bumper return (13.5 mm installed, 10 at full travel) |
-| 33a | M3 Belleville washers (stack of 3 each) | 6 | — | 4 | The two neck slip clutches |
+| 33a | M3 Belleville washers (stack of 3 each) | 6 | — | 4 | The two neck slip clutches. **Ordered 29 Oct: 20 each of 8 × 4.2 × 0.2, 0.3 and 0.4 mm** (mix thicknesses to tune the slip torque) (ID clears the D4 shoulder). OD 8 is wider than the 7 mm hex socket, so the coupler socket/hub hex grow to suit |
 | 33b | Ø4 × 3.5 mm nylon/brass sleeves (or M3 shoulder screws) | 4 | — | 3 | Bumper slides on these; 0.5 longer than the lug so it isn't clamped |
 | 33c | Steel ballast: ~100 g block (30 × 36 × 12) + ~150 g washers | 2 | — | 6 | Low under the battery shelf + under the deck, 2 × M4 each |
 | 33d | 5 V 3 A buck + 1 A polyfuse | 1 | — | 8 | **Covered by the 3 × XY-3606 (line 24)**: one is the head rail; add the 1 A polyfuse. Separate 5 V for the head (ear/shutter servos, mic amp, LCDs) so a stalled ear can't brown out the Pi Polyfuses **on hand.** |
