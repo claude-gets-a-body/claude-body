@@ -48,6 +48,7 @@ are noted in `cad/params.py`.
 | 22a | 1000 µF 16 V low-ESR electrolytic | 1 | Jaycar | 2 | 2 | On the buck output: the Pi on GPIO has no input protection |
 | 23 | Rocker switch, 19 × 13 mm cut-out | 1 | Jaycar | 2 | 2 | Motor kill (cuts servo power only) |
 | 24 | XY-3606 synchronous buck, 9–36 V in, 5 V 6 A out (set 5.15 V) | 1 | AliExpress | 7 | 7 | For the Pi, which peaks about 3 A once the head and Coral have their own rails. **Must pass a DL24 4 A / 20 min test at ≥ 5.0 V**, then watch `vcgencmd get_throttled` in real use. If it fails, fall back to the Pololu D36V50F5 (~A$60 delivered). Not an XL4015/LM2596: they sag |
+| 24a | 12 V buck for the servo bus, ≥ 3 A (4S in, 12.0 V out) | 1 | AliExpress | 8 | 8 | **New 28 Oct, with the 4S pack:** a full 4S pack is 16.8 V, above the 12 V STS3215's limit. Only the neck pan + head tilt are bus servos now (the wheels come from the vacuum), so 3 A is plenty |
 | 25 | 12.6 V 2 A Li-ion charger, **RCM-marked** | 1 | local (Jaycar/Altronics) | 25 | 25 | Mains side must be Australian-approved |
 | 26 | Spring contacts (pogo, ≥ 2 A) | 4 | AliExpress | 2 | 8 | 2 per pole on the robot; brass pads on the dock |
 | 27 | 5 A Schottky (SS54) + polyfuse | 1 | AliExpress | 2 | 2 | Charge contacts aren't live from the pack. The pack tops out ~0.4 V low through the diode (`bat_pct` is scaled) |
