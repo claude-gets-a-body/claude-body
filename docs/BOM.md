@@ -48,7 +48,7 @@ are noted in `cad/params.py`.
 | 22 | Blade fuses + inline holders: 7.5 A (servo branch), 3 A (Pi buck branch) | 2 | Jaycar | 4 | 8 | A stalled wheel must not take the brain down **On hand.** |
 | 22a | 1000 µF 16 V low-ESR electrolytic | 1 | Jaycar | 2 | 2 | On the buck output: the Pi on GPIO has no input protection |
 | 23 | Rocker switch, 19 × 13 mm cut-out | 1 | Jaycar | 2 | 2 | Motor kill (cuts servo power only) **On hand.** |
-| 24 | XY-3606 synchronous buck, 9–36 V in, 5 V 6 A out (set 5.15 V) | 1 | AliExpress | 7 | 7 | For the Pi, which peaks about 3 A once the head and Coral have their own rails. **Must pass a DL24 4 A / 20 min test at ≥ 5.0 V**, then watch `vcgencmd get_throttled` in real use. If it fails, fall back to the Pololu D36V50F5 (~A$60 delivered). Not an XL4015/LM2596: they sag |
+| 24 | XY-3606 synchronous buck, 9–36 V in, 5 V 6 A out (set 5.15 V) | 1 | AliExpress | 7 | 7 | For the Pi, which peaks about 3 A once the head and Coral have their own rails. **Must pass a DL24 4 A / 20 min test at ≥ 5.0 V**, then watch `vcgencmd get_throttled` in real use. If it fails, fall back to the Pololu D36V50F5 (~A$60 delivered). Not an XL4015/LM2596: they sag **3 ordered 28 Oct** (Pi, head rail, Coral + LED-strip rail). |
 | 24a | 12 V buck for the servo bus, ≥ 3 A (4S in, 12.0 V out) | 1 | AliExpress | 8 | 8 | **New 28 Oct, with the 4S pack:** a full 4S pack is 16.8 V, above the 12 V STS3215's limit. Only the neck pan + head tilt are bus servos now (the wheels come from the vacuum), so 3 A is plenty **Must be BUCK-BOOST** (e.g. 8–40 V in → 12 V, 5 A): a 4S pack runs 16.8 V full down to ~12.8 V empty, so a plain buck rated 15 V minimum drops out for most of the discharge. |
 | 25 | 12.6 V 2 A Li-ion charger, **RCM-marked** | 1 | local (Jaycar/Altronics) | 25 | 25 | Mains side must be Australian-approved |
 | 26 | Spring contacts (pogo, ≥ 2 A) | 4 | AliExpress | 2 | 8 | 2 per pole on the robot; brass pads on the dock |
@@ -69,7 +69,7 @@ are noted in `cad/params.py`.
 | 33a | M3 Belleville washers (stack of 3 each) | 6 | — | 4 | The two neck slip clutches |
 | 33b | Ø4 × 3.5 mm nylon/brass sleeves (or M3 shoulder screws) | 4 | — | 3 | Bumper slides on these; 0.5 longer than the lug so it isn't clamped |
 | 33c | Steel ballast: ~100 g block (30 × 36 × 12) + ~150 g washers | 2 | — | 6 | Low under the battery shelf + under the deck, 2 × M4 each |
-| 33d | 5 V 3 A buck + 1 A polyfuse | 1 | — | 8 | **Ordered 28 Oct:** 3 × 5 A buck modules (head rail, Coral rail, 1 spare); add the polyfuse. Separate 5 V for the head (ear/shutter servos, mic amp, LCDs) so a stalled ear can't brown out the Pi |
+| 33d | 5 V 3 A buck + 1 A polyfuse | 1 | — | 8 | **Covered by the 3 × XY-3606 (line 24)**: one is the head rail; add the 1 A polyfuse. Separate 5 V for the head (ear/shutter servos, mic amp, LCDs) so a stalled ear can't brown out the Pi |
 | 34 | Thin flexible USB-C-to-C cable 0.5 m, silicone wire, JST-PH/XH kits | — | — | 30 | Neck cable must be *flexible*, with **USB-C at both ends** (a USB-A plug won't pass the 10 mm hub bore). Anchor the bundle at both ends so it twists, not winds **Ordered 28 Oct: 3 × 0.5 m flat silicone USB-C to C, and a JST-PH 2.0 kit.** |
 | 35 | Hook-and-loop battery strap | 1 | 3 | 3 | |
 
