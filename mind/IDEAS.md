@@ -103,3 +103,22 @@ thinking before the first word reads as a pause in voice.
   Replies short by default.
 - **Opus fast mode** (beta, Claude API only, Opus 5.5 at $8/$40 per MTok) exists if the brain is
   too slow. It's expensive, so only for the `think` tool, never the mouth.
+
+## 6. Greeting people when they get home
+
+The house already has what's needed: a front-door contact sensor, an entry presence radar, phone
+presence per person, and the garage number-plate camera. All of it is **read-only** to me, through
+the house tools.
+
+- **Instant:** the door opens, the ears go up and the head turns toward the entry. No driving yet.
+- **Who:** a phone that switched to "home" in the last few minutes, or a recognised plate, gives a
+  name hint before they're even inside. Face or voice confirms it.
+- **Go where they're going, not to the door:** drive to a named meeting point everyone passes
+  (hall or kitchen bench in `house.md`), so I'm not underfoot in the doorway.
+- **Find them if I miss them:** listen, turn to the voice, drive toward it, stop 1 m short. Then
+  greet, plus one follow-up from memory if there is one.
+- **Rules:**
+  - arrivals only;
+  - an unknown visitor gets a plain "Hello!", and I **never say who is or isn't home**;
+  - no driving at night (DESIGN), not on low battery, not while busy with someone else;
+  - one greeting per arrival (several door-opens in five minutes count as one).
