@@ -23,7 +23,7 @@ are noted in `cad/params.py`.
 | 10 | VL53L1X time-of-flight breakout | 6 | AliExpress (generic) or Pololu #3415 | 7 | 42 | **3 ordered 28 Oct** (2 forward + 1 face); the 3 drop sensors now come from the vacuum's cliff sensors. Was: 3 down (drops), 2 forward (toys), 1 in the face (table edges). **≥ 40 mm minimum range**, already designed in |
 | 11 | BNO085 IMU breakout | 1 | AliExpress | 25 | 25 | Tilt/fall detection; MPU-6050 (A$3) works as a fallback **Ordered 28 Oct: MPU-6050 (GY-521)** to start; BNO085 later if tilt detection needs it. |
 | 12 | TTP223 capacitive touch pad | 1 | AliExpress | 1 | 1 | Head pats **Ordered 28 Oct** (pack of 20). |
-| 13 | WS2812 16-LED ring (~68 mm OD) | 1 | AliExpress | 4 | 4 | Chest light. UNCONFIRMED OD **Also ordered 28 Oct: 1 m WS2812B 5 V, 60/m, white PCB** for a status band round the base (cap brightness ~20 %, own 5 V rail, level shifter on data). Chest ring still to buy. Chest light can be ~11 LEDs off the strip wrapped round a short printed tube inside the diffuser (a halo) if no ring is bought. |
+| 13 | WS2812 16-LED ring (~68 mm OD) | 1 | AliExpress | 4 | 4 | Chest light. UNCONFIRMED OD **Also ordered 28 Oct: 1 m WS2812B 5 V, 60/m, white PCB** for a status band round the base (cap brightness ~20 %, own 5 V rail, level shifter on data). Chest ring still to buy. Chest light can be ~11 LEDs off the strip wrapped round a short printed tube inside the diffuser (a halo) if no ring is bought. **Ring ordered too.** |
 | 13a | 74AHCT125 level shifter (3.3 V → 5 V data for the LED strip) + 330 Ω resistor | 1 | AliExpress | 2 | 2 | **Ordered 28 Oct.** |
 | 14 | 40 mm 4 Ω 3 W speaker | 1 | AliExpress | 3 | 3 | Chest, driven by the XVF3800's amp **On hand.** |
 | 14a | 7" DSI IPS touch display, 800×480, for the abdomen (tilted up ~15–20°) | 1 | On hand | 0 | 0 | **Have it.** Changed 28 Oct from the 3.5" (now the fallback). Ribbon to the Pi 5's DSI port; the Pi already sits in the body. Measure outline, thickness and ribbon length before the body CAD: at ~165 mm wide it needs a wider/taller abdomen and a fresh tip-over check. Shows notes, camera view, timers, pictures; touch for kids. Flush behind a printed bezel; dims at night **500 mm Pi 5 22-pin to 15-pin DSI cable ordered 28 Oct.** |
@@ -46,7 +46,7 @@ are noted in `cad/params.py`.
 | 20 | 3S 20 A BMS with balance | 1 | AliExpress | 5 | 5 | |
 | 21 | 10 k B3950 NTC | 1 | AliExpress | 1 | 1 | On the pack, read by the base ESP32 |
 | 22 | Blade fuses + inline holders: 7.5 A (servo branch), 3 A (Pi buck branch) | 2 | Jaycar | 4 | 8 | A stalled wheel must not take the brain down **On hand.** |
-| 22a | 1000 µF 16 V low-ESR electrolytic | 1 | Jaycar | 2 | 2 | On the buck output: the Pi on GPIO has no input protection |
+| 22a | 1000 µF 16 V low-ESR electrolytic | 1 | Jaycar | 2 | 2 | On the buck output: the Pi on GPIO has no input protection **On hand.** |
 | 23 | Rocker switch, 19 × 13 mm cut-out | 1 | Jaycar | 2 | 2 | Motor kill (cuts servo power only) **On hand.** |
 | 24 | XY-3606 synchronous buck, 9–36 V in, 5 V 6 A out (set 5.15 V) | 1 | AliExpress | 7 | 7 | For the Pi, which peaks about 3 A once the head and Coral have their own rails. **Must pass a DL24 4 A / 20 min test at ≥ 5.0 V**, then watch `vcgencmd get_throttled` in real use. If it fails, fall back to the Pololu D36V50F5 (~A$60 delivered). Not an XL4015/LM2596: they sag **3 ordered 28 Oct** (Pi, head rail, Coral + LED-strip rail). |
 | 24a | 12 V buck for the servo bus, ≥ 3 A (4S in, 12.0 V out) | 1 | AliExpress | 8 | 8 | **New 28 Oct, with the 4S pack:** a full 4S pack is 16.8 V, above the 12 V STS3215's limit. Only the neck pan + head tilt are bus servos now (the wheels come from the vacuum), so 3 A is plenty **Must be BUCK-BOOST** (e.g. 8–40 V in → 12 V, 5 A): a 4S pack runs 16.8 V full down to ~12.8 V empty, so a plain buck rated 15 V minimum drops out for most of the discharge. |
@@ -69,7 +69,7 @@ are noted in `cad/params.py`.
 | 33a | M3 Belleville washers (stack of 3 each) | 6 | — | 4 | The two neck slip clutches |
 | 33b | Ø4 × 3.5 mm nylon/brass sleeves (or M3 shoulder screws) | 4 | — | 3 | Bumper slides on these; 0.5 longer than the lug so it isn't clamped |
 | 33c | Steel ballast: ~100 g block (30 × 36 × 12) + ~150 g washers | 2 | — | 6 | Low under the battery shelf + under the deck, 2 × M4 each |
-| 33d | 5 V 3 A buck + 1 A polyfuse | 1 | — | 8 | **Covered by the 3 × XY-3606 (line 24)**: one is the head rail; add the 1 A polyfuse. Separate 5 V for the head (ear/shutter servos, mic amp, LCDs) so a stalled ear can't brown out the Pi |
+| 33d | 5 V 3 A buck + 1 A polyfuse | 1 | — | 8 | **Covered by the 3 × XY-3606 (line 24)**: one is the head rail; add the 1 A polyfuse. Separate 5 V for the head (ear/shutter servos, mic amp, LCDs) so a stalled ear can't brown out the Pi Polyfuses **on hand.** |
 | 34 | Thin flexible USB-C-to-C cable 0.5 m, silicone wire, JST-PH/XH kits | — | — | 30 | Neck cable must be *flexible*, with **USB-C at both ends** (a USB-A plug won't pass the 10 mm hub bore). Anchor the bundle at both ends so it twists, not winds **Ordered 28 Oct: 3 × 0.5 m flat silicone USB-C to C, and a JST-PH 2.0 kit.** |
 | 35 | Hook-and-loop battery strap | 1 | 3 | 3 | |
 
