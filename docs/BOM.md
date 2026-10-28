@@ -64,7 +64,7 @@ are noted in `cad/params.py`.
 | 29 | 6806-2RS bearing (30 × 42 × 7) | 1 | 6 | 6 | Hollow neck pan bearing **Ordered 28 Oct.** |
 | 30 | 1in (25.4 mm) chrome steel ball | 2 | 2 | 4 | Printed ball casters |
 | 31 | M3 heat-set inserts (Ruthex-style, hole Ø4.0) | 100 | — | 10 | **Ordered 28 Oct: brass insert kit (M2/M3, 300 pcs).** Measure the M3 OD/length and set `M3_INSERT_D`/`M3_INSERT_DEPTH` in params.py to match. |
-| 32 | M3 / M2.5 / M2 screw assortments | 3 | 10 | 30 | Incl. an M3 × 10 shoulder screw for the tilt clutch **Ordered 28 Oct: hex socket cap kit, M2–M6, 2220 pcs**, with nuts and washers. Still need the M3 × 10 shoulder screw. M2.5 brass standoffs: **on hand.** |
+| 32 | M3 / M2.5 / M2 screw assortments | 3 | 10 | 30 | Incl. a **D4 × M3 shoulder screw, ~4 mm shoulder** for the tilt clutch (buy 4 and 6 mm; the coupler floor gets set to suit, and its hole opens to 4.2 for the shoulder) **Ordered 28 Oct: hex socket cap kit, M2–M6, 2220 pcs**, with nuts and washers. Shoulder screws (D4 × M3, 4 + 6 mm) bought separately. M2.5 brass standoffs: **on hand.** |
 | 33 | Compression springs 5 × 15 mm | 2 | — | 5 | Bumper return (13.5 mm installed, 10 at full travel) |
 | 33a | M3 Belleville washers (stack of 3 each) | 6 | — | 4 | The two neck slip clutches |
 | 33b | Ø4 × 3.5 mm nylon/brass sleeves (or M3 shoulder screws) | 4 | — | 3 | Bumper slides on these; 0.5 longer than the lug so it isn't clamped |
