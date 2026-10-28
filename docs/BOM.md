@@ -20,7 +20,7 @@ are noted in `cad/params.py`.
 | 7b | Google Coral USB Accelerator (Edge TPU) | 1 | On hand | 0 | 0 | **Have it.** On-robot person/face/floor-object detection, about 2 W; frames stay local. Own 5 V 3 A buck (not the Pi's USB budget); needs airflow. libedgetpu/pycoral need community builds on Ubuntu 24.04 / Py3.12, or run it in a container like Frigate did |
 | 8 | ESP32-S3-DevKitC-1 N16R8 (two USB-C; RGB LED on GPIO48) | 3 | AliExpress | 12 | 36 | Base (reflexes), head (face), 1 spare. **Ordered 27 Oct.** Octal PSRAM: GPIO35–37 are NOT free. Base talks to the Pi over native USB only, no Wi-Fi in the safety loop |
 | 9 | LDROBOT STL-19P lidar ("D500 kit") | 1 | AliExpress 1005013215151320 | 97 | 97 | The LD19 is discontinued; same footprint |
-| 10 | VL53L1X time-of-flight breakout | 6 | AliExpress (generic) or Pololu #3415 | 7 | 42 | 3 down (drops), 2 forward (toys), 1 in the face (table edges). **≥ 40 mm minimum range**, already designed in |
+| 10 | VL53L1X time-of-flight breakout | 6 | AliExpress (generic) or Pololu #3415 | 7 | 42 | **3 ordered 28 Oct** (2 forward + 1 face); the 3 drop sensors now come from the vacuum's cliff sensors. Was: 3 down (drops), 2 forward (toys), 1 in the face (table edges). **≥ 40 mm minimum range**, already designed in |
 | 11 | BNO085 IMU breakout | 1 | AliExpress | 25 | 25 | Tilt/fall detection; MPU-6050 (A$3) works as a fallback |
 | 12 | TTP223 capacitive touch pad | 1 | AliExpress | 1 | 1 | Head pats |
 | 13 | WS2812 16-LED ring (~68 mm OD) | 1 | AliExpress | 4 | 4 | Chest light. UNCONFIRMED OD |
@@ -34,7 +34,7 @@ are noted in `cad/params.py`.
 | 15 | Feetech STS3215 **12 V** (C018 or C047, 1:345, 30 kg·cm) | 4 | AliExpress / Core (A$33.55) | 37 | 148 | 2 wheels, neck pan, head tilt. **Not** the 7.4 V version |
 | 15a | Wheel motor drivers: **2 × TI DRV8874** carrier (4.5–37 V, 2.1 A continuous, current-sense IPROPI output to the base ESP32 for stall detection) | 2 | Pololu #4035 via Core, or clones | 15 | 30 | **Not ordered yet: first count the vacuum wheel-module wires** (2 thick + 4 thin = brushed with encoder, so DRV8874; 3 thick + hall wires = brushless, so a BLDC driver). If stall current is well over 2 A, use a Cytron MDD10A. Not the DRV8833 (10.8 V max) |
 | 16 | Waveshare Bus Servo Adapter (A) | 1 | Core (A$7.75) | 8 | 8 | UART jumper = A |
-| 17 | MG90S metal-gear micro servo | 3 | AliExpress | 4 | 12 | 2 ears + visor shutter |
+| 17 | MG90S metal-gear micro servo | 3 | AliExpress | 4 | 12 | 2 ears + visor shutter. **Ordered 28 Oct** (4-pack, 1 spare) |
 | 18 | Micro switch, roller lever | 2 | AliExpress | 1 | 2 | Bumper |
 
 ## Power (Nick's trade — he'll know better parts)
@@ -67,7 +67,7 @@ are noted in `cad/params.py`.
 | 33a | M3 Belleville washers (stack of 3 each) | 6 | — | 4 | The two neck slip clutches |
 | 33b | Ø4 × 3.5 mm nylon/brass sleeves (or M3 shoulder screws) | 4 | — | 3 | Bumper slides on these; 0.5 longer than the lug so it isn't clamped |
 | 33c | Steel ballast: ~100 g block (30 × 36 × 12) + ~150 g washers | 2 | — | 6 | Low under the battery shelf + under the deck, 2 × M4 each |
-| 33d | 5 V 3 A buck + 1 A polyfuse | 1 | — | 8 | Separate 5 V for the head (ear/shutter servos, mic amp, LCDs) so a stalled ear can't brown out the Pi |
+| 33d | 5 V 3 A buck + 1 A polyfuse | 1 | — | 8 | **Ordered 28 Oct:** 3 × 5 A buck modules (head rail, Coral rail, 1 spare); add the polyfuse. Separate 5 V for the head (ear/shutter servos, mic amp, LCDs) so a stalled ear can't brown out the Pi |
 | 34 | Thin flexible USB-C-to-C cable 0.5 m, silicone wire, JST-PH/XH kits | — | — | 30 | Neck cable must be *flexible*, with **USB-C at both ends** (a USB-A plug won't pass the 10 mm hub bore). Anchor the bundle at both ends so it twists, not winds |
 | 35 | Hook-and-loop battery strap | 1 | 3 | 3 | |
 
