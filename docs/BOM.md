@@ -10,11 +10,11 @@ are noted in `cad/params.py`.
 | # | Part | Qty | Where / what to search | Each | Line | Notes |
 |---|---|---|---|---|---|---|
 | 1 | Raspberry Pi 5, **8 GB** | 1 | On hand | 0 | 0 | **Have it.** Powered from the 5 V buck on GPIO: needs `PSU_MAX_CURRENT=5000` + `usb_max_current_enable=1` |
-| 2 | Pi 5 Active Cooler | 1 | Core / AliExpress | 9 | 9 | |
-| 3 | microSD 64 GB (A2) | 1 | anywhere | 15 | 15 | Ubuntu 24.04 + ROS 2 Jazzy |
+| 2 | Pi 5 Active Cooler | 1 | Core / AliExpress | 9 | 9 | **On hand.** |
+| 3 | microSD 64 GB (A2) | 1 | anywhere | 15 | 15 | Ubuntu 24.04 + ROS 2 Jazzy **Not needed:** the Pi boots from its NVMe SSD HAT. |
 | 4 | Seeed reSpeaker XVF3800 4-mic array **with XIAO ESP32-S3** | 1 | Seeed | 117 | 117 | **Ordered 28 Oct, due 4–16 Nov.** Echo cancelling + direction of arrival + on-chip wake word. **All speech plays out through it**. Changed 2026-10-25 from the plain USB board (101991441, A$113): lower voice latency in Nick's real use |
 | 5 | USB UVC camera, **IMX291 2MP 1080p, 130° M12 lens**, 4-pin 2.0 mm header (5 V, D−, D+, GND) | 1 | AliExpress | 57 | 57 | **Ordered 27 Oct.** Board looks 38 × 38 mm (not 32): widen the eye spacing to fit. Make a short lead to the neck hub. Bracket printed after it arrives |
-| 6 | Mini USB 2.0 hub board (FE1.1s, 4 port) | 1 | AliExpress | 5 | 5 | In the head: camera + mic array + face ESP32 on one neck cable. **Cut its upstream VBUS** if it's self-powered, or it back-feeds 5 V into the Pi |
+| 6 | Mini USB 2.0 hub board (FE1.1s, 4 port) | 1 | AliExpress | 5 | 5 | In the head: camera + mic array + face ESP32 on one neck cable. **Cut its upstream VBUS** if it's self-powered, or it back-feeds 5 V into the Pi **On hand.** |
 | 7 | **Waveshare ESP32-S3-DualEye LCD 1.28 (No Touch)**: ESP32-S3R8 (16 MB flash, 8 MB PSRAM) + 2 × 240×240 round IPS, splittable with an 18-pin FPC | 1 | AliExpress | 28 | 28 | **Ordered 27 Oct.** Replaces the 2 separate LCDs AND the head ESP32. Header exposes I²C + UART + GPIO0 only, so ears/shutter go on the PCA9685 (7a). Measure before redoing the eye mounts |
 | 7a | PCA9685 16-channel PWM/servo board (I²C) | 3 | AliExpress | 7 | 21 | **Ordered 27 Oct, 3-pack.** 1 in the head (2 ears + shutter), 2 spares |
 | 7b | Google Coral USB Accelerator (Edge TPU) | 1 | On hand | 0 | 0 | **Have it.** On-robot person/face/floor-object detection, about 2 W; frames stay local. Own 5 V 3 A buck (not the Pi's USB budget); needs airflow. libedgetpu/pycoral need community builds on Ubuntu 24.04 / Py3.12, or run it in a container like Frigate did |
@@ -23,8 +23,9 @@ are noted in `cad/params.py`.
 | 10 | VL53L1X time-of-flight breakout | 6 | AliExpress (generic) or Pololu #3415 | 7 | 42 | **3 ordered 28 Oct** (2 forward + 1 face); the 3 drop sensors now come from the vacuum's cliff sensors. Was: 3 down (drops), 2 forward (toys), 1 in the face (table edges). **≥ 40 mm minimum range**, already designed in |
 | 11 | BNO085 IMU breakout | 1 | AliExpress | 25 | 25 | Tilt/fall detection; MPU-6050 (A$3) works as a fallback **Ordered 28 Oct: MPU-6050 (GY-521)** to start; BNO085 later if tilt detection needs it. |
 | 12 | TTP223 capacitive touch pad | 1 | AliExpress | 1 | 1 | Head pats **Ordered 28 Oct** (pack of 20). |
-| 13 | WS2812 16-LED ring (~68 mm OD) | 1 | AliExpress | 4 | 4 | Chest light. UNCONFIRMED OD **Also ordered 28 Oct: 1 m WS2812B 5 V, 60/m, white PCB** for a status band round the base (cap brightness ~20 %, own 5 V rail, level shifter on data). Chest ring still to buy. |
-| 14 | 40 mm 4 Ω 3 W speaker | 1 | AliExpress | 3 | 3 | Chest, driven by the XVF3800's amp |
+| 13 | WS2812 16-LED ring (~68 mm OD) | 1 | AliExpress | 4 | 4 | Chest light. UNCONFIRMED OD **Also ordered 28 Oct: 1 m WS2812B 5 V, 60/m, white PCB** for a status band round the base (cap brightness ~20 %, own 5 V rail, level shifter on data). Chest ring still to buy. Chest light can be ~11 LEDs off the strip wrapped round a short printed tube inside the diffuser (a halo) if no ring is bought. |
+| 13a | 74AHCT125 level shifter (3.3 V → 5 V data for the LED strip) + 330 Ω resistor | 1 | AliExpress | 2 | 2 | **Ordered 28 Oct.** |
+| 14 | 40 mm 4 Ω 3 W speaker | 1 | AliExpress | 3 | 3 | Chest, driven by the XVF3800's amp **On hand.** |
 | 14a | 7" DSI IPS touch display, 800×480, for the abdomen (tilted up ~15–20°) | 1 | On hand | 0 | 0 | **Have it.** Changed 28 Oct from the 3.5" (now the fallback). Ribbon to the Pi 5's DSI port; the Pi already sits in the body. Measure outline, thickness and ribbon length before the body CAD: at ~165 mm wide it needs a wider/taller abdomen and a fresh tip-over check. Shows notes, camera view, timers, pictures; touch for kids. Flush behind a printed bezel; dims at night **500 mm Pi 5 22-pin to 15-pin DSI cable ordered 28 Oct.** |
 
 ## Muscles
@@ -44,11 +45,11 @@ are noted in `cad/params.py`.
 | 19 | 18650 cells (Molicel P28A / Samsung 35E class) | 6 | local | 8 | 48 | 3S2P, about 65 Wh |
 | 20 | 3S 20 A BMS with balance | 1 | AliExpress | 5 | 5 | |
 | 21 | 10 k B3950 NTC | 1 | AliExpress | 1 | 1 | On the pack, read by the base ESP32 |
-| 22 | Blade fuses + inline holders: 7.5 A (servo branch), 3 A (Pi buck branch) | 2 | Jaycar | 4 | 8 | A stalled wheel must not take the brain down |
+| 22 | Blade fuses + inline holders: 7.5 A (servo branch), 3 A (Pi buck branch) | 2 | Jaycar | 4 | 8 | A stalled wheel must not take the brain down **On hand.** |
 | 22a | 1000 µF 16 V low-ESR electrolytic | 1 | Jaycar | 2 | 2 | On the buck output: the Pi on GPIO has no input protection |
-| 23 | Rocker switch, 19 × 13 mm cut-out | 1 | Jaycar | 2 | 2 | Motor kill (cuts servo power only) |
+| 23 | Rocker switch, 19 × 13 mm cut-out | 1 | Jaycar | 2 | 2 | Motor kill (cuts servo power only) **On hand.** |
 | 24 | XY-3606 synchronous buck, 9–36 V in, 5 V 6 A out (set 5.15 V) | 1 | AliExpress | 7 | 7 | For the Pi, which peaks about 3 A once the head and Coral have their own rails. **Must pass a DL24 4 A / 20 min test at ≥ 5.0 V**, then watch `vcgencmd get_throttled` in real use. If it fails, fall back to the Pololu D36V50F5 (~A$60 delivered). Not an XL4015/LM2596: they sag |
-| 24a | 12 V buck for the servo bus, ≥ 3 A (4S in, 12.0 V out) | 1 | AliExpress | 8 | 8 | **New 28 Oct, with the 4S pack:** a full 4S pack is 16.8 V, above the 12 V STS3215's limit. Only the neck pan + head tilt are bus servos now (the wheels come from the vacuum), so 3 A is plenty |
+| 24a | 12 V buck for the servo bus, ≥ 3 A (4S in, 12.0 V out) | 1 | AliExpress | 8 | 8 | **New 28 Oct, with the 4S pack:** a full 4S pack is 16.8 V, above the 12 V STS3215's limit. Only the neck pan + head tilt are bus servos now (the wheels come from the vacuum), so 3 A is plenty **Must be BUCK-BOOST** (e.g. 8–40 V in → 12 V, 5 A): a 4S pack runs 16.8 V full down to ~12.8 V empty, so a plain buck rated 15 V minimum drops out for most of the discharge. |
 | 25 | 12.6 V 2 A Li-ion charger, **RCM-marked** | 1 | local (Jaycar/Altronics) | 25 | 25 | Mains side must be Australian-approved |
 | 26 | Spring contacts (pogo, ≥ 2 A) | 4 | AliExpress | 2 | 8 | 2 per pole on the robot; brass pads on the dock |
 | 27 | 5 A Schottky (SS54) + polyfuse | 1 | AliExpress | 2 | 2 | Charge contacts aren't live from the pack. The pack tops out ~0.4 V low through the diode (`bat_pct` is scaled) |
@@ -63,7 +64,7 @@ are noted in `cad/params.py`.
 | 29 | 6806-2RS bearing (30 × 42 × 7) | 1 | 6 | 6 | Hollow neck pan bearing **Ordered 28 Oct.** |
 | 30 | 1in (25.4 mm) chrome steel ball | 2 | 2 | 4 | Printed ball casters |
 | 31 | M3 heat-set inserts (Ruthex-style, hole Ø4.0) | 100 | — | 10 | **Ordered 28 Oct: brass insert kit (M2/M3, 300 pcs).** Measure the M3 OD/length and set `M3_INSERT_D`/`M3_INSERT_DEPTH` in params.py to match. |
-| 32 | M3 / M2.5 / M2 screw assortments | 3 | 10 | 30 | Incl. an M3 × 10 shoulder screw for the tilt clutch **Ordered 28 Oct: hex socket cap kit, M2–M6, 2220 pcs**, with nuts and washers. Still need the M3 × 10 shoulder screw. |
+| 32 | M3 / M2.5 / M2 screw assortments | 3 | 10 | 30 | Incl. an M3 × 10 shoulder screw for the tilt clutch **Ordered 28 Oct: hex socket cap kit, M2–M6, 2220 pcs**, with nuts and washers. Still need the M3 × 10 shoulder screw. M2.5 brass standoffs: **on hand.** |
 | 33 | Compression springs 5 × 15 mm | 2 | — | 5 | Bumper return (13.5 mm installed, 10 at full travel) |
 | 33a | M3 Belleville washers (stack of 3 each) | 6 | — | 4 | The two neck slip clutches |
 | 33b | Ø4 × 3.5 mm nylon/brass sleeves (or M3 shoulder screws) | 4 | — | 3 | Bumper slides on these; 0.5 longer than the lug so it isn't clamped |
