@@ -25,7 +25,7 @@ are noted in `cad/params.py`.
 | 12 | TTP223 capacitive touch pad | 1 | AliExpress | 1 | 1 | Head pats |
 | 13 | WS2812 16-LED ring (~68 mm OD) | 1 | AliExpress | 4 | 4 | Chest light. UNCONFIRMED OD |
 | 14 | 40 mm 4 Ω 3 W speaker | 1 | AliExpress | 3 | 3 | Chest, driven by the XVF3800's amp |
-| 14a | 3.5" display for the abdomen (DSI or HDMI, 480×320 or better, for the Pi 5) | 1 | On hand | 0 | 0 | **Have it.** Measure before drawing the belly window. Notes, camera view, timers. Added 2026-10-25 at Nick's request |
+| 14a | 7" DSI IPS touch display, 800×480, for the abdomen (tilted up ~15–20°) | 1 | On hand | 0 | 0 | **Have it.** Changed 28 Oct from the 3.5" (now the fallback). Ribbon to the Pi 5's DSI port; the Pi already sits in the body. Measure outline, thickness and ribbon length before the body CAD: at ~165 mm wide it needs a wider/taller abdomen and a fresh tip-over check. Shows notes, camera view, timers, pictures; touch for kids. Flush behind a printed bezel; dims at night |
 
 ## Muscles
 
