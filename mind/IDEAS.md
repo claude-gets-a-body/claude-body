@@ -78,3 +78,28 @@ be the bottleneck. The latency budget is dominated by the cloud model and speech
   onto the robot (no K8).
 - **Measure first:** once I'm built, log each stage's time (speech end → transcript → first token
   → first audio) and spend money on whichever stage is actually slow.
+
+## 5. Thinking time: a fast mouth and a slow brain
+
+`config.py` still defaults to Opus 5.5 with adaptive thinking at low effort. Even at low effort,
+thinking before the first word reads as a pause in voice.
+
+- **The mouth: Haiku 5.5 with thinking off,** for the whole day's conversation. `thinking:
+  {type: "disabled"}` is allowed at effort `high` or below. Never toggle it mid-day: switching
+  thinking on or off between requests invalidates the messages cache.
+- **The brain: a `think` tool.** When a question needs real reasoning (homework maths, planning,
+  "why" questions with a catch), the mouth says something natural ("ooh, let me think about that
+  one"), the ears and eyes do a thinking animation, and the tool sends a separate one-off request
+  to Opus or Sonnet with thinking on, plus the relevant memory. The answer comes back as the tool
+  result and the mouth says it in my voice. A visible "thinking" pose makes a 3–8 s wait feel
+  natural; silence doesn't.
+- **Zero-latency first sound** (already in DESIGN): pre-made "mm-hm" and "one sec" clips, and the
+  ears react on speech end.
+- **Warm cache:** pre-warm the day's frozen prefix at 04:00 and when the robot wakes, so the first
+  conversation of the morning isn't a cold write.
+- **Start early:** with streaming speech-to-text, send the request the moment end-of-turn is
+  detected, not after a fixed silence timeout.
+- **Prompt line for the mouth:** "Latency-sensitive; begin your visible answer immediately."
+  Replies short by default.
+- **Opus fast mode** (beta, Claude API only, Opus 5.5 at $8/$40 per MTok) exists if the brain is
+  too slow. It's expensive, so only for the `think` tool, never the mouth.
