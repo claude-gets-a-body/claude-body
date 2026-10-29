@@ -8,7 +8,7 @@ Settings: 0.2 mm layers, 3 walls, 15 % gyroid unless noted, textured PEI, M3 hea
 |---|---|---|---|---|---|
 | 1 | `ball_bowl` | PETG charcoal | 92 × 99 × 102 | 74 | split face down, post up; tree supports inside the bowl |
 | 1 | `ball_cap` | PLA charcoal | 88 × 88 × 31 | 22 | split face down |
-| 1 | `body_back` | PLA cream | 85 × 220 × 140 | 129 | upright; tree supports under the note pocket |
+| 1 | `body_back` | PLA cream | 85 × 220 × 140 | 123 | upright, no supports |
 | 1 | `body_floor` | PETG | 161 × 220 × 10 | 121 | as exported |
 | 1 | `body_front` | PLA cream | 85 × 220 × 140 | 84 | upright; tree supports under the screen window's top edge and the clamp bosses |
 | 1 | `body_lid` | PETG | 104 × 200 × 64 | 85 | top face down; hanger plates point up |

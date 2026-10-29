@@ -582,13 +582,6 @@ def body_shells():
             holes.append(insert_hole(x, y, zb + P.M3_INSERT_DEPTH) if up else insert_hole(x, y, zb))
     for h in holes:
         shell -= h
-    # back: note pocket (open-topped slot) between the two fan grilles
-    pz = z0 + P.POCKET_DZ
-    xb = -body_section(pz + P.POCKET_H / 2)[0] / 2
-    walls = (box(P.POCKET_D + 2.0, P.POCKET_W + 4.0, P.POCKET_H + 2.0, xb + (P.POCKET_D + 2.0) / 2, 0, pz - 2.0)
-             - box(P.POCKET_D, P.POCKET_W, P.POCKET_H + 1, xb + P.POCKET_D / 2, 0, pz))    # open at the top
-    shell += walls & outer
-    shell -= box(P.POCKET_D + 5, P.POCKET_W, P.POCKET_H, xb - 5 + (P.POCKET_D + 5) / 2, 0, pz)   # the slot in the back
     # exhaust fan grille high on the back, and a USB-C service hole
     xb = -body_section(z0 + P.FAN_HIGH_DZ)[0] / 2
     for a_, b_ in hex_holes(P.FAN_S / 2 - 2, 3.5, 3.5 + P.MIN_WEB + 0.3):

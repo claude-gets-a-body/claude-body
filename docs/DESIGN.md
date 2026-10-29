@@ -21,7 +21,7 @@ What I'd actually do day to day:
 - **See, when it helps.** "What's this bug?" "Does this look right?" "Where did I leave my keys?"
   I look on purpose. I don't film the house.
 - **Come to you.** "Claude, come here" → I drive over. "Go and tell Dad dinner's ready" → I go and say
-  it. I can carry a note in my back pocket.
+  it. I can show a note on my belly screen.
 - **Remember.** Who likes what, what we talked about yesterday, what I promised to do, how the house is
   laid out. Memory lives in plain text files on K8, so Nick can read and edit what I know. It works
   the same way as my memory in Claude Code.
@@ -112,8 +112,9 @@ wheel motors (count the wires), and the encoder type. The base CAD waits until t
                orange shutter. Mic array under the top grille. Head-pat touch pad. Face ESP32-S3.
    BALL NECK   Ø92 ball holding the tilt servo; head rides it at a constant 3 mm gap
    POST        hollow, turns in a 6806 bearing in the lid; cables run up the middle
-   BODY        Ø200→168, 112 mm tall. Pi 5, 5 V buck, pan servo + gears under the lid,
-               speaker + 16-LED ring behind the chest diffuser, note pocket at the back
+   BODY        Rounded box 220 × 170, 140 mm tall (29 Oct). 7" touch screen in a face leaning
+               back 18°, side speaker grilles, exhaust fan high on the back, intake in the floor.
+               Pi 5, M.2 SSD, Coral on the floor; pan servo + gears under the lid
    WAIST       40 mm open band; the lidar looks out through it past 3 slim hollow pillars
    SKIRT       Ø236, 94 mm. Wheels boxed inside; the front 200° floats as the bumper.
                Battery, base ESP32 (reflexes), drop + obstacle sensors, ball casters
@@ -177,14 +178,14 @@ band over a turret on top because nothing on top can block it, and the head can 
 
 ### 3.3 Body
 
-The Pi 5 (4 GB, active cooler) lies flat at the back of the body floor, next to the 5 V 5 A buck. The
-**speaker is in the chest**, behind a 16-LED ring and a natural-PETG diffuser plug, so the chest
-glows when I speak. It's driven by the mic array's own amp, so echo cancellation has its reference.
-There's a note pocket at the back for real things (a drawing, a note), and a **3.5" screen in the
-abdomen**, below the chest light (Changed 2026-10-25 at Nick's request), driven straight from the Pi 5. It shows written notes ("write
-a note for Mum: back by 6"), what the camera sees, timers, the weather, and pictures of whatever I'm
-explaining. The screen is static and flush behind a printed bezel, so it adds no pinch points; the
-body shell needs a window and a mount for it (CAD change pending). The shell is two printed halves (front/back) on heat-set inserts,
+**Changed 29 Oct:** the body is a rounded box (like the head) built round a **7" DSI touch screen**
+in a face leaning back 18°, held by a printed clamp frame. The screen replaces the chest light and
+the note pocket: it shows written notes ("write a note for Mum: back by 6"), what the camera sees,
+timers, the weather, and pictures of whatever I'm explaining. It's static and flush, so it adds no
+pinch points. The Pi 5 (8 GB, active cooler) lies flat at the back of the body floor, with the
+Freenove M.2 SSD board and the Coral beside it. The two **speakers fire out of the sides** (Logitech
+Z200 drivers), driven from the mic array's output, so echo cancellation has its reference. One fan
+exhausts high on the back; cool air comes in through a grille in the floor. The shell is two printed halves (front/back) on heat-set inserts,
 with screwed seam tabs at mid-height. The body floor screws down into pads on top of the three
 waist pillars, so lifting it by the head lifts the whole robot.
 

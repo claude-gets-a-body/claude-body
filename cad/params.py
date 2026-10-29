@@ -108,8 +108,6 @@ FAN_S = 40.0                      # Freenove case fan size. UNCONFIRMED: measure
 FAN_HIGH_DZ = 110.0               # one exhaust fan high on the back; cool air comes in through the floor
 FAN_HIGH_Y = 40.0                 # off-centre: the pan gears are behind the middle of the back
 FLOOR_INTAKE_XY = (25.0, -70.0)   # passive intake grille in the floor, beside the M.2 board
-POCKET_W, POCKET_H, POCKET_D = 70.0, 45.0, 18.0
-POCKET_DZ = 40.0                  # note pocket's bottom, above the shell bottom
 
 # ---- neck + head --------------------------------------------------------------------------
 # The head sits on a ball. Ball centre = tilt axis. Head material stays >= HEAD_CLEAR_R from the
@@ -199,5 +197,5 @@ HEAD_SPLIT_X = 0.0                 # head splits front/back THROUGH the tilt axi
 HUB_FLANGE_R = 23.0
 HUB_FLANGE_SCREW_R = 19.5
 FRAME_HUB_HOLE_R = 5.5
-BODY_BOSS_ANGLES = (30.0, 70.0, 150.0, 210.0, 290.0, 330.0)   # none on the X=0 split (review S9), clear of window + pocket
+BODY_BOSS_ANGLES = (30.0, 70.0, 150.0, 210.0, 290.0, 330.0)   # none on the X=0 split (review S9), clear of the old chest window
 AXLE_PIN_D, AXLE_PIN_L = 8.0, 30.0  # steel dowel / cut M8 bolt instead of a printed stub (review)

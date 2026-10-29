@@ -338,7 +338,7 @@ NOTES = {
     "wheel_hub_L": "inner face down", "wheel_hub_R": "inner face down",
     "tyre_L": "TPU, slow (Elegoo TPU 95A @ECC profile), dry spool", "tyre_R": "TPU, slow, dry spool",
     "ear_L": "TPU, flat", "ear_R": "TPU, flat",
-    "body_front": "upright; tree supports under the screen window's top edge and the clamp bosses", "body_back": "upright; tree supports under the note pocket",
+    "body_front": "upright; tree supports under the screen window's top edge and the clamp bosses", "body_back": "upright, no supports",
     "body_lid": "top face down; hanger plates point up", "ball_bowl": "split face down, post up; tree supports inside the bowl",
     "ball_cap": "split face down", "head_rear": "back face down; tree supports (touching buildplate) under the top fillet",
     "head_front": "front face down, so the face is smooth; tree supports inside only", "head_frame": "bridge face down",
