@@ -17,18 +17,18 @@ Settings: 0.2 mm layers, 3 walls, 15 % gyroid unless noted, textured PEI, M3 hea
 | 1 | `clutch_hub` | PETG | 30 × 30 × 12 | 4 | as exported |
 | 1 | `ear_L` | TPU 95A (orange) | 26 × 52 × 5 | 4 | TPU, flat |
 | 1 | `ear_R` | TPU 95A (orange) | 26 × 52 × 5 | 4 | TPU, flat |
-| 1 | `eye_backplate_L` | PLA | 54 × 44 × 2 | 5 | as exported |
-| 1 | `eye_backplate_R` | PLA | 54 × 44 × 2 | 5 | as exported |
+| 1 | `eye_backplate_L` | PLA | 52 × 44 × 2 | 3 | as exported |
+| 1 | `eye_backplate_R` | PLA | 52 × 44 × 2 | 3 | as exported |
 | 1 | `head_frame` | PETG | 87 × 165 × 96 | 86 | bridge face down |
 | 1 | `head_front` | PETG charcoal | 118 × 170 × 65 | 96 | front face down, so the face is smooth; tree supports inside only |
 | 1 | `head_rear` | PLA cream | 117 × 170 × 53 | 83 | back face down; tree supports (touching buildplate) under the top fillet |
-| 1 | `hub_drive` | PETG | 46 × 35 × 34 | 7 | as exported |
+| 1 | `hub_drive` | PETG | 46 × 35 × 28 | 6 | as exported |
 | 1 | `hub_idle` | PETG | 46 × 35 × 25 | 6 | as exported |
 | 1 | `pan_gear` | PETG | 48 × 48 × 10 | 11 | as exported |
 | 1 | `pinion_gear` | PETG | 48 × 48 × 10 | 10 | as exported |
 | 1 | `shutter` | PLA orange | 22 × 20 × 4 | 1 | as exported |
 | 1 | `tilt_adapter` | PETG | 25 × 25 × 6 | 2 | as exported |
-| 1 | `tilt_coupler` | PETG | 25 × 25 × 8 | 3 | as exported |
+| 1 | `tilt_coupler` | PETG | 25 × 25 × 14 | 5 | as exported |
 | 2 | `bumper` | PETG cream | 136 × 236 × 96 | 117 | upright, no supports |
 | 2 | `caster_housing_F` | PETG | 46 × 46 × 12 | 13 | as exported |
 | 2 | `caster_housing_R` | PETG | 46 × 46 × 9 | 11 | as exported |

@@ -49,10 +49,10 @@
  },
  {
   "part": "eye_backplate_L",
-  "x": 53.5,
-  "y": 44.5,
+  "x": 52.5,
+  "y": 43.5,
   "z": 2.0,
-  "grams_pla": 5.0,
+  "grams_pla": 3.0,
   "material": "PLA"
  },
  {
@@ -81,10 +81,10 @@
  },
  {
   "part": "eye_backplate_R",
-  "x": 53.5,
-  "y": 44.5,
+  "x": 52.5,
+  "y": 43.5,
   "z": 2.0,
-  "grams_pla": 5.0,
+  "grams_pla": 3.0,
   "material": "PLA"
  },
  {
@@ -227,8 +227,8 @@
   "part": "tilt_coupler",
   "x": 25.0,
   "y": 25.0,
-  "z": 8.0,
-  "grams_pla": 3.0,
+  "z": 14.5,
+  "grams_pla": 5.0,
   "material": "PETG"
  },
  {
@@ -267,8 +267,8 @@
   "part": "hub_drive",
   "x": 46.0,
   "y": 35.0,
-  "z": 33.5,
-  "grams_pla": 7.0,
+  "z": 27.5,
+  "grams_pla": 6.0,
   "material": "PETG"
  },
  {

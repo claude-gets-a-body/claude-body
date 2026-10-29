@@ -134,10 +134,14 @@ HEAD_FRAME_Y = 55.0                # inner face of the head frame side plates (>
 EYE_Y = 38.0
 EYE_DZ = 10.0                      # above head centre
 EYE_WINDOW_D = 34.0                # Waveshare 1.28in: visible Ø32.4, glass Ø35.5
-LCD_PCB_D = 37.5                   # Waveshare 1.28in round LCD module (SKU 19192)
+# Eyes = Waveshare ESP32-S3-DualEye-LCD-1.28 (SKU 32267), split in two and joined by its 200 mm 18-pin FFC.
+# From Waveshare's drawing (Touch version; assumed the same outline): 93.5 x 36.5 whole, each eye Ø36.5.
+LCD_PCB_D = 36.5
 LCD_GLASS_D = 35.5
-LCD_STANDOFF_DX, LCD_STANDOFF_DY = 18.6, 26.7   # 4 x M2 rear standoffs, 6.1 mm glass-to-standoff-end
-LCD_DEPTH = 6.1
+# 2 x M2 per eye, diagonal, relative to that eye's centre: (towards the middle, up) and (outwards, down).
+EYE_HOLE_IN = (10.4, 11.36)        # eye centre 93.5/2 - 36.5/2 = 28.5 from the middle; hole at 18.10: 10.4 in, 11.36 up
+EYE_HOLE_OUT = (10.5, -11.29)      # hole at 39.00: 10.5 out, 11.29 down
+LCD_DEPTH = 6.1                    # glass front to the M2 standoff ends. UNCONFIRMED for the DualEye: measure on arrival
 CAM_DZ = EYE_DZ                     # camera between the eyes ("third eye"): the only spot outside the ball-clear sphere
 FACE_DEPTH = 22.0                  # front cap of the head is a separate print (charcoal)
 SHUTTER_W, SHUTTER_H = 20.0, 18.0  # orange camera shutter; slides DOWN 16 mm to open

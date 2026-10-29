@@ -802,26 +802,34 @@ def head_front(face):
 
 
 def eye_boss_offsets(s):
+    """The face's 3 clamp bosses round each eye: top, outer, and low-outer. Nothing inboard (the camera
+    lives there) and nothing straight below (the DualEye's 14-pin header and its cable exit there)."""
     r = P.LCD_PCB_D / 2 + 4
-    return [(0.0, r), (0.0, -r), (s * r, 0.0)]          # top, bottom, outer — the camera sits inboard
+    d = r / math.sqrt(2)
+    return [(0.0, r), (s * r, 0.0), (s * d, -d)]
+
+
+def eye_holes(s):
+    """The DualEye's 2 x M2 per eye, relative to the eye centre (dy, dz); s = +1 left eye, -1 right."""
+    (i_dy, i_dz), (o_dy, o_dz) = P.EYE_HOLE_IN, P.EYE_HOLE_OUT
+    return [(-s * i_dy, i_dz), (s * o_dy, o_dz)]
 
 
 def eye_backplate(side):
-    """Clamps a Waveshare 1.28in round LCD against its window: 4 x M2 into the LCD's rear standoffs,
-    3 x M2 into inserts in the face's bosses."""
+    """Clamps one half of the split Waveshare DualEye against its window: 2 x M2 into the board's
+    standoffs, 3 x M2 into inserts in the face's bosses. A ring, so the board's parts stay uncovered."""
     s = 1 if side == "L" else -1
     ez = P.HEAD_CZ + P.EYE_DZ
     fx = P.HEAD_CX + P.HEAD_D / 2
-    x0 = fx - P.HEAD_WALL - P.LCD_DEPTH - 2.0      # plate sits on the LCD standoff ends and the boss ends
-    plate = cyl_x(P.LCD_PCB_D / 2 + 8, 2.0, x0=x0, y=s * P.EYE_Y, z=ez)
-    for dy in (-P.LCD_STANDOFF_DX / 2, P.LCD_STANDOFF_DX / 2):
-        for dz in (-P.LCD_STANDOFF_DY / 2, P.LCD_STANDOFF_DY / 2):
-            plate -= cyl_x(P.M2_CLEAR / 2, 4, x0=x0 - 1, y=s * P.EYE_Y + dy, z=ez + dz)
-    for dy, dz in eye_boss_offsets(s):
-        plate -= cyl_x(P.M2_CLEAR / 2, 4, x0=x0 - 1, y=s * P.EYE_Y + dy, z=ez + dz)
+    ey = s * P.EYE_Y
+    x0 = fx - P.HEAD_WALL - P.LCD_DEPTH - 2.0      # plate sits on the board's standoff ends and the boss ends
+    plate = cyl_x(P.LCD_PCB_D / 2 + 8, 2.0, x0=x0, y=ey, z=ez)
+    plate -= cyl_x(11.0, 4, x0=x0 - 1, y=ey, z=ez)                       # open middle: ESP32, SD slot, FFC connector
+    for dy, dz in eye_holes(s) + eye_boss_offsets(s):
+        plate -= cyl_x(P.M2_CLEAR / 2, 4, x0=x0 - 1, y=ey + dy, z=ez + dz)
     inner_edge = P.EYE_Y - P.LCD_PCB_D / 2 + 1.0
     plate -= box(10, 60, 80, x0, s * (inner_edge - 30), ez - 40)          # nothing inboard: the camera lives there
-    plate -= cyl_x(6, 4, x0=x0 - 1, y=s * P.EYE_Y, z=ez - P.LCD_PCB_D / 2 + 2)   # FPC/header exit
+    plate -= box(10, 20, 15, x0, ey, ez - 26)                             # 14-pin header + its cable, straight down
     return plate
 
 
@@ -903,8 +911,16 @@ def tilt_adapter():
 
 TILT_ADAPTER_T = 6.0
 TILT_CLUTCH_R = 12.5                     # friction faces at up to r 12.5 (was r ~6): ~4x the holding torque
-TILT_COUPLER_T = 8.0
-HUB_HEX_AF = 7.0
+# The clutch screw is a D4 x M3 shoulder screw (4 or 6 mm shoulder, both bought). The shoulder runs
+# through the coupler's floor and bottoms on the adapter, so the Belleville stack under its head always
+# gets the same squeeze. Stack: 8 x 4.2 discs in 0.2 / 0.3 / 0.4 (60 bought), mixed to tune the slip.
+TILT_FLOOR = 2.0                         # coupler floor = the friction disc between adapter and stack
+SHOULDER_MAX = 6.0                       # room for the longer screw; the 4 mm one leaves 2 mm spare
+SHOULDER_HEAD_H = 3.0                    # D4 x M3 head height. UNCONFIRMED: measure (head is ~Ø7)
+SHOULDER_D = 4.2                         # through the floor: the coupler turns on the 4 mm shoulder
+HUB_HEX_AF = 9.0                         # was 7: the 8 mm discs must fit inside the hex socket
+HEX_ENGAGE = 5.0
+TILT_COUPLER_T = SHOULDER_MAX + SHOULDER_HEAD_H + 0.5 + HEX_ENGAGE   # 14.5; ends 1.3 inside the ball wall
 
 
 def tilt_coupler():
@@ -914,10 +930,10 @@ def tilt_coupler():
     c = P.TILT_AXIS_Z
     y0 = TILT_HORN_Y + TILT_ADAPTER_T
     cp = cyl_y(TILT_CLUTCH_R, TILT_COUPLER_T, y0=y0, z=c)
-    cp -= cyl_y(P.M3_CLEAR / 2, TILT_COUPLER_T + 2, y0=y0 - 1, z=c)
+    cp -= cyl_y(SHOULDER_D / 2, TILT_COUPLER_T + 2, y0=y0 - 1, z=c)
     hex_r = HUB_HEX_AF / 2 / math.cos(math.radians(30)) + P.FIT
-    sock = make_face(Polyline(*[(hex_r * math.cos(math.radians(60 * i)), y0 + 2.0, c + hex_r * math.sin(math.radians(60 * i))) for i in range(6)], close=True))
-    cp -= extrude(sock, TILT_COUPLER_T, dir=(0, 1, 0))                         # hex socket; screw head + washers sit at its floor
+    sock = make_face(Polyline(*[(hex_r * math.cos(math.radians(60 * i)), y0 + TILT_FLOOR, c + hex_r * math.sin(math.radians(60 * i))) for i in range(6)], close=True))
+    cp -= extrude(sock, TILT_COUPLER_T, dir=(0, 1, 0))                         # hex socket; Belleville stack + screw head sit at its floor
     return cp
 
 
@@ -928,7 +944,7 @@ def hubs():
     flange_t = 4.0
     trim = box(200, 200, 200, z0=c + P.FLANGE_TRIM_DZ)                 # flat bottom: the halves' underside slides under it
     # +Y: drive hub. Hex end keys into the tilt coupler; the flange screws to the frame plate.
-    y_hex = TILT_HORN_Y + TILT_ADAPTER_T + 2.0 + 1.5                     # stops 1.5 short of the socket floor (screw head + Belleville)
+    y_hex = TILT_HORN_Y + TILT_ADAPTER_T + SHOULDER_MAX + SHOULDER_HEAD_H + 0.5   # clears the head of the 6 mm shoulder screw
     y_tube = TILT_HORN_Y + TILT_ADAPTER_T + TILT_COUPLER_T + 0.5
     hex_r = HUB_HEX_AF / 2 / math.cos(math.radians(30))
     hx = make_face(Polyline(*[(hex_r * math.cos(math.radians(60 * i)), y_hex, c + hex_r * math.sin(math.radians(60 * i))) for i in range(6)], close=True))
