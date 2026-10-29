@@ -8,7 +8,7 @@ renders only). Parts are modelled where they sit in the robot; build.py lays the
 import math
 from build123d import (Align, Axis, Box, Cone, Cylinder, Part, Plane, Polyline, Pos, Rot, Sphere,
                        Keep, extrude, fillet, make_face, revolve, split, Locations, Polygon,
-                       PolarLocations)
+                       PolarLocations, RectangleRounded, Vector, loft)
 import params as P
 
 C = (Align.CENTER, Align.CENTER, Align.MIN)
@@ -107,8 +107,7 @@ def wheel_servo(side):
     return Pos(0, face_y, P.AXLE_Z) * rot * Rot(0, 0, 180) * sts3215()
 
 
-LED_RING_X = 74.0                          # 16-LED ring sits behind the diffuser (body cone is steeper since it was shortened)
-PI_X = -50.0                               # Pi 5 lies flat at the back of the body floor
+PI_X = -42.0                               # Pi 5 lies flat at the back of the body floor, clear of the intake fan
 GEAR_TOP_Z = P.BODY_Z1 - 8.0               # gears + clutch cap hang under the lid's bearing boss
 CLUTCH_FLANGE_T = 2.0
 GEAR_Z0 = GEAR_TOP_Z - P.GEAR_T
@@ -138,8 +137,15 @@ def vendor():
     v["battery_3s2p"] = box(P.PACK_L, P.PACK_W, P.PACK_H, x=P.PACK_X, z0=P.PACK_SHELF_Z + 0.5)
     v["lidar_stl19p"] = box(P.LIDAR_D, P.LIDAR_W, P.LIDAR_H - 12.7, z0=P.BAND_Z0 + 3) + cyl(35.3 / 2, 12.7, z0=P.BAND_Z0 + 3 + P.LIDAR_H - 12.7)
     v["pi5"] = box(56, 85, 24, x=PI_X, z0=P.BODY_Z0 + P.BODY_FLOOR_T + 6)
-    v["speaker_40"] = cyl_x(20, 12, x0=LED_RING_X - 13, z=P.CHEST_Z)
-    v["led_ring_16"] = cyl_x(34, 3, x0=LED_RING_X, z=P.CHEST_Z) - cyl_x(26, 5, x0=LED_RING_X - 1, z=P.CHEST_Z)
+    v["screen_7in"] = facet_plane(0, SCREEN_VC, -P.SCREEN_GLASS_IN) * Box(P.SCREEN_W, P.SCREEN_H, P.SCREEN_T, align=(Align.CENTER, Align.CENTER, Align.MAX))
+    v["m2_board"] = box(70, 90, 14, x=22, z0=P.BODY_Z0 + P.BODY_FLOOR_T + 6)          # Freenove M.2 board + SSD (UNCONFIRMED size)
+    v["coral"] = box(65, 30, 8, x=25, y=65, z0=P.BODY_Z0 + P.BODY_FLOOR_T + 6)        # Coral USB (65 x 30 x 8)
+    zs = BODY_SHELL_Z0 + P.SPK_DZ
+    for s, n in ((1, "L"), (-1, "R")):
+        yw = body_section(zs)[1] / 2 - P.BODY_WALL
+        v[f"speaker_{n}"] = cyl_y(P.SPK_D / 2, P.SPK_T, x=P.SPK_X, y0=s * yw - (P.SPK_T if s > 0 else 0), z=zs)
+    xb = -body_section(BODY_SHELL_Z0 + P.FAN_HIGH_DZ)[0] / 2 + P.BODY_WALL
+    v["fan_exhaust"] = box(10, P.FAN_S, P.FAN_S, x=xb + 5.5, y=P.FAN_HIGH_Y, z0=BODY_SHELL_Z0 + P.FAN_HIGH_DZ - P.FAN_S / 2)
     for s in (1, -1):
         v[f"bearing_608_{'L' if s > 0 else 'R'}"] = Pos(0, s * (P.WHEEL_Y + P.WHEEL_W / 2 + 4 + P.BEARING_W / 2), P.AXLE_Z) * Rot(90, 0, 0) * (
             Cylinder(P.BEARING_OD / 2, P.BEARING_W) - Cylinder(P.BEARING_ID / 2, P.BEARING_W + 1))
@@ -445,14 +451,86 @@ def waist_deck():
     return deck
 
 
-# ---------------------------------------------------------------- body column
-def body_boss_xy(a, r):
-    return r * math.cos(math.radians(a)), r * math.sin(math.radians(a))
+# ---------------------------------------------------------------- body column (abdomen)
+BODY_SHELL_Z0 = P.BODY_Z0 + P.BODY_FLOOR_T     # the shell stands on the floor plate
+
+
+def body_section(z):
+    """(depth, width, corner r) of the abdomen's outside at height z (linear between bottom and top)."""
+    f = (z - BODY_SHELL_Z0) / P.BODY_H
+    return (P.BODY_D0 + (P.BODY_D1 - P.BODY_D0) * f, P.BODY_W0 + (P.BODY_W1 - P.BODY_W0) * f,
+            P.BODY_CR0 + (P.BODY_CR1 - P.BODY_CR0) * f)
+
+
+def body_box(inset=0.0, z0=None, z1=None):
+    """The abdomen's rounded-box volume, `inset` inside its outer surface, from z0 to z1."""
+    z0 = BODY_SHELL_Z0 if z0 is None else z0
+    z1 = P.BODY_Z1 if z1 is None else z1
+    secs = []
+    for z in (z0, z1):
+        d, w, r = body_section(z)
+        secs.append(Plane.XY.offset(z) * RectangleRounded(d - 2 * inset, w - 2 * inset, max(r - inset, 1.0)))
+    return loft(secs)
+
+
+def facet_n():
+    t = math.radians(P.SCREEN_TILT)
+    return Vector(math.cos(t), 0, math.sin(t))
+
+
+def facet_pt(u, v, d=0.0):
+    """A point on the screen face: u across (+Y), v up the slope from the floor, d along the outward
+    normal (0 = the face's outer surface, negative = inside)."""
+    t = math.radians(P.SCREEN_TILT)
+    up = Vector(-math.sin(t), 0, math.cos(t))
+    return Vector(P.FACET_X0, 0, BODY_SHELL_Z0) + Vector(0, u, 0) + up * v + facet_n() * d
+
+
+def facet_plane(u=0.0, v=0.0, d=0.0):
+    return Plane(origin=facet_pt(u, v, d), x_dir=(0, 1, 0), z_dir=facet_n())
+
+
+def behind_facet(shape, d=0.0):
+    """Keep only what is behind the screen face (offset d along its normal)."""
+    return split(shape, facet_plane(d=d), keep=Keep.BOTTOM)
+
+
+SCREEN_VC = P.SCREEN_V0 + P.SCREEN_H / 2                     # screen centre, up the face
+SCREEN_BACK_D = -P.SCREEN_GLASS_IN - P.SCREEN_T             # the screen's back, along the face normal
+SCREEN_BOSSES = [(s * (P.SCREEN_W / 2 + 5), SCREEN_VC + dv) for s in (1, -1) for dv in (-35.0, 35.0)] + \
+                [(0.0, SCREEN_VC - P.SCREEN_H / 2 - 5), (0.0, SCREEN_VC + P.SCREEN_H / 2 + 5)]
+
+
+def facet_cyl(u, v, r, d0, d1):
+    """Cylinder along the face normal from depth d0 to d1 (d1 > d0)."""
+    return facet_plane(u, v, d0) * Cylinder(r, d1 - d0, align=C)
+
+
+def body_bosses(z):
+    """Shell screw positions at height z: (x, y, wall direction). Two each side, two at the back;
+    none on the X=0 seam, none in front of the screen face."""
+    d, w, _ = body_section(z)
+    yi, xb = w / 2 - P.BODY_WALL - 4.5, -(d / 2 - P.BODY_WALL - 4.5)
+    pts = [(x, s * yi, (0, s)) for x in (15.0, -35.0) for s in (1, -1)]
+    return pts + [(xb, s * 48.0, (-1, 0)) for s in (1, -1)]
+
+
+def hex_holes(r_area, hole_d, pitch):
+    """(a, b) centres of a hex hole pattern inside a circle of radius r_area."""
+    n = int(r_area // pitch) + 1
+    out = []
+    for j in range(-n, n + 1):
+        for i in range(-n, n + 1):
+            a, b = i * pitch + (pitch / 2 if j % 2 else 0), j * pitch * 0.866
+            if math.hypot(a, b) <= r_area - hole_d / 2:
+                out.append((a, b))
+    return out
 
 
 def body_floor():
     z0, t = P.BODY_Z0, P.BODY_FLOOR_T
-    f = cyl(P.BODY_R0, t, z0=z0)
+    d, w, r = body_section(BODY_SHELL_Z0)
+    f = behind_facet(Pos(0, 0, z0) * extrude(RectangleRounded(d, w, r), t))
     for a in P.PILLAR_ANGLES:                                     # cable chases + 2 screws into each pillar pad
         f -= Rot(0, 0, a) * box(P.PILLAR_W * 1.6 - 3.2, P.PILLAR_W - 3.2, t + 2, P.PILLAR_R, 0, z0 - 1)
         for x, y in pillar_insert_xy(a):
@@ -463,96 +541,100 @@ def body_floor():
         for dy in (-29, 29):
             f += cyl(3, 6, PI_X + dx, dy, z0 + t)
             f -= cyl(1.25, 6, PI_X + dx, dy, z0 + t + 0.5)
-    # generic M3 boss grid at the front for the buck converter, USB hub, amp
-    for x in (30, 50, 70):
-        for y in (-30, 0, 30):
+    # M3 insert grid for the M.2 board, Coral and USB parts (their sizes aren't measured yet)
+    for x in (0.0, 20.0, 40.0):
+        for y in (-60.0, -30.0, 0.0, 30.0, 60.0):
             f += cyl(3.5, 5, x, y, z0 + t)
             f -= cyl(P.M3_INSERT_D / 2, 5, x, y, z0 + t + 1)
-    # shell screw bosses go in the shell; floor has matching clearance holes
-    for a in P.BODY_BOSS_ANGLES:
-        x, y = body_boss_xy(a, P.BODY_R0 - P.BODY_WALL - 4)
+    ix, iy = P.FLOOR_INTAKE_XY                                    # passive intake: cool air up from the base
+    for a_, b_ in hex_holes(18.0, 4.0, 4.0 + P.MIN_WEB + 0.3):
+        f -= cyl(2.0, t + 2, ix + a_, iy + b_, z0 - 1)
+    for x, y, _ in body_bosses(BODY_SHELL_Z0):                    # shell screws come up through the floor
         f -= cyl(P.M3_CLEAR / 2, t + 2, x, y, z0 - 1)
+        f -= cyl(P.M3_HEAD_D / 2 + 0.3, 2, x, y, z0 - 0.5)
     return f
 
 
 def body_shells():
-    z0 = P.BODY_Z0 + P.BODY_FLOOR_T
-    shell = frustum_shell(P.BODY_R0, P.BODY_R1, P.BODY_H, P.BODY_WALL, z0)
-    # screw bosses at the bottom (into floor) and top (lid) — inserts; none on the X=0 split
-    def boss_at(a, zb, up):
-        r_wall = P.BODY_R0 - (P.BODY_R0 - P.BODY_R1) * (zb - z0) / P.BODY_H - P.BODY_WALL
-        r = r_wall - 4
-        x, y = r * math.cos(math.radians(a)), r * math.sin(math.radians(a))
-        b = cyl(4.5, 10, x, y, zb if up else zb - 10)
-        b += Rot(0, 0, a) * box(6, 9, 10, r + 3, 0, zb if up else zb - 10)
-        h = insert_hole(x, y, zb + P.M3_INSERT_DEPTH) if up else insert_hole(x, y, zb)
-        return b, h
+    z0, z1 = BODY_SHELL_Z0, P.BODY_Z1
+    outer = body_box()
+    inner = body_box(P.BODY_WALL, z0 - 1, z1 + 1)
+    shell = behind_facet(outer - inner)
+    # the screen face: a wall BODY_WALL thick on the slope
+    face = split(behind_facet(outer), facet_plane(d=-P.BODY_WALL), keep=Keep.TOP)
+    shell += face
+    # screen window, and a pocket on the inside that locates the glass
+    shell -= facet_plane(0, SCREEN_VC, -5) * extrude(RectangleRounded(P.SCREEN_VIEW_W, P.SCREEN_VIEW_H, 3), 10)
+    shell -= facet_plane(0, SCREEN_VC, -P.BODY_WALL - 0.5) * extrude(
+        RectangleRounded(P.SCREEN_W + 0.6, P.SCREEN_H + 0.6, 2), P.BODY_WALL + 0.5 - P.SCREEN_GLASS_IN)
+    # clamp bosses behind the face: the screen_clamp screws to their ends, pressing the screen's back edge
+    for u, v in SCREEN_BOSSES:
+        shell += facet_cyl(u, v, 4.0, SCREEN_BACK_D, -P.BODY_WALL + 0.5)
+        shell -= facet_cyl(u, v, P.M3_INSERT_D / 2, SCREEN_BACK_D - 0.1, SCREEN_BACK_D + P.M3_INSERT_DEPTH)
+    # screw bosses at the bottom (into the floor) and top (lid); inserts
     holes = []
-    for a in P.BODY_BOSS_ANGLES:
-        b, h = boss_at(a, z0, True)
-        shell += b
-        holes.append(h)
-        b, h = boss_at(a, P.BODY_Z1, False)
-        shell += b
-        holes.append(h)
+    for zb, up in ((z0, True), (z1, False)):
+        for x, y, (dx, dy) in body_bosses(zb):
+            zb0 = zb if up else zb - 10
+            b = cyl(4.5, 10, x, y, zb0)
+            b += box(9 if dx == 0 else 6, 6 if dx == 0 else 9, 10, x + dx * 3, y + dy * 3, zb0)
+            shell += b & outer
+            holes.append(insert_hole(x, y, zb + P.M3_INSERT_DEPTH) if up else insert_hole(x, y, zb))
     for h in holes:
         shell -= h
-    # chest: window for the speaker grille + light ring diffuser
-    shell -= cyl_x(P.CHEST_WINDOW_D / 2, 30, x0=P.BODY_R0 - 30, z=P.CHEST_Z)
-    # back: note pocket (open-topped slot) and a USB-C service hole
-    pocket_z = P.BODY_Z0 + 50
-    shell -= Rot(0, 0, 180) * box(P.POCKET_D, P.POCKET_W, P.POCKET_H, P.BODY_R0 - 12, 0, pocket_z)
-    pocket_walls = Rot(0, 0, 180) * (box(P.POCKET_D + 2 * 2.0, P.POCKET_W + 2 * 2.0, P.POCKET_H + 2.0,
-                                          P.BODY_R0 - 12 - 2.0, 0, pocket_z - 2.0)
-                                      - box(P.POCKET_D, P.POCKET_W, P.POCKET_H + 1, P.BODY_R0 - 12, 0, pocket_z))
-    shell += pocket_walls & (Pos(0, 0, z0) * Cone(P.BODY_R0, P.BODY_R1, P.BODY_H, align=C))   # trimmed to the curve
-    shell -= Rot(0, 0, 160) * cyl_x(5, 20, x0=P.BODY_R0 - 12, z=P.BODY_Z0 + 30)
+    # back: note pocket (open-topped slot) between the two fan grilles
+    pz = z0 + P.POCKET_DZ
+    xb = -body_section(pz + P.POCKET_H / 2)[0] / 2
+    walls = (box(P.POCKET_D + 2.0, P.POCKET_W + 4.0, P.POCKET_H + 2.0, xb + (P.POCKET_D + 2.0) / 2, 0, pz - 2.0)
+             - box(P.POCKET_D, P.POCKET_W, P.POCKET_H + 1, xb + P.POCKET_D / 2, 0, pz))    # open at the top
+    shell += walls & outer
+    shell -= box(P.POCKET_D + 5, P.POCKET_W, P.POCKET_H, xb - 5 + (P.POCKET_D + 5) / 2, 0, pz)   # the slot in the back
+    # exhaust fan grille high on the back, and a USB-C service hole
+    xb = -body_section(z0 + P.FAN_HIGH_DZ)[0] / 2
+    for a_, b_ in hex_holes(P.FAN_S / 2 - 2, 3.5, 3.5 + P.MIN_WEB + 0.3):
+        shell -= cyl_x(1.75, 12, x0=xb - 6, y=P.FAN_HIGH_Y + a_, z=z0 + P.FAN_HIGH_DZ + b_)
+    shell -= cyl_x(5, 12, x0=-body_section(z0 + 20)[0] / 2 - 6, y=-55, z=z0 + 20)
+    # side speaker grilles (Z200 drivers fire sideways)
+    zs = z0 + P.SPK_DZ
+    for s in (1, -1):
+        yw = body_section(zs)[1] / 2
+        for a_, b_ in hex_holes(P.SPK_D / 2 - 4, 4.0, 4.0 + P.MIN_WEB + 0.3):
+            if abs(P.SPK_X + a_) < 3.5:                             # solid strip on the front/back seam
+                continue
+            shell -= cyl_y(2.0, 12, x=P.SPK_X + a_, y0=s * yw - 6, z=zs + b_)
     front = split(shell, Plane.YZ, keep=Keep.TOP)
     back = split(shell, Plane.YZ, keep=Keep.BOTTOM)
     # seam tabs at mid-height on both sides: part of the front half, reaching 10 mm into the back half;
     # an M3 through the back half's wall into an insert in each tab holds the seam closed
-    zm = P.CHEST_Z - 8
-    r_in = P.BODY_R0 - (P.BODY_R0 - P.BODY_R1) * (zm + 8 - z0) / P.BODY_H - P.BODY_WALL
+    zm = z0 + 100                                                # above the speakers
+    yi = body_section(zm + 8)[1] / 2 - P.BODY_WALL
     for s in (1, -1):
-        outer_c = Pos(0, 0, z0) * Cone(P.BODY_R0, P.BODY_R1, P.BODY_H, align=C)
-        gap_c = Pos(0, 0, z0) * Cone(P.BODY_R0 - P.BODY_WALL - 0.3, P.BODY_R1 - P.BODY_WALL - 0.3, P.BODY_H, align=C)
-        fused = box(10, 8, 16, 5, s * (r_in - 3), zm) & outer_c          # merges into the front wall
-        reach = box(10, 8, 16, -5, s * (r_in - 3), zm) & gap_c           # 0.3 mm off the back half's wall
-        tab = fused + reach
-        tab -= cyl_y(P.M3_INSERT_D / 2, 6, x=-5, y0=s * (r_in - 0.3) - (6 if s > 0 else 0), z=zm + 8)
+        fused = box(10, 8, 16, 5, s * (yi - 3.5), zm)               # overlaps the front wall by 0.5
+        reach = box(10, 8, 16, -5, s * (yi - 4.3), zm)              # 0.3 mm off the back half's wall
+        tab = (fused + reach) & outer
+        tab -= cyl_y(P.M3_INSERT_D / 2, 6, x=-5, y0=s * (yi - 0.3) - (6 if s > 0 else 0), z=zm + 8)
         front += tab
-        back -= cyl_y(P.M3_CLEAR / 2, 8, x=-5, y0=s * (r_in - 1) - (0 if s > 0 else 8), z=zm + 8)
-    front = Part(max(front.solids(), key=lambda s_: s_.volume).wrapped)   # drop a zero-volume sliver the boolean leaves
+        back -= cyl_y(P.M3_CLEAR / 2, 8, x=-5, y0=s * (yi - 1) - (0 if s > 0 else 8), z=zm + 8)
+    front = Part(max(front.solids(), key=lambda s_: s_.volume).wrapped)   # drop any zero-volume sliver
+    back = Part(max(back.solids(), key=lambda s_: s_.volume).wrapped)
     return front, back
 
 
-def chest_grille():
-    """Plug that fills the chest window and follows the cone (print in natural PETG: it diffuses the
-    LED ring). A 1.2 mm flange on the inside catches the wall. Speaker holes Ø4 on a 5.5 mm pitch."""
-    z0 = P.BODY_Z0 + P.BODY_FLOOR_T
-    outer = Pos(0, 0, z0) * Cone(P.BODY_R0, P.BODY_R1, P.BODY_H, align=C)
-    inner = Pos(0, 0, z0) * Cone(P.BODY_R0 - P.BODY_WALL, P.BODY_R1 - P.BODY_WALL, P.BODY_H, align=C)
-    inner2 = Pos(0, 0, z0) * Cone(P.BODY_R0 - P.BODY_WALL - 1.2, P.BODY_R1 - P.BODY_WALL - 1.2, P.BODY_H, align=C)
-    rw = P.CHEST_WINDOW_D / 2
-    plug = cyl_x(rw - P.FIT, 40, x0=60, z=P.CHEST_Z) & (outer - inner)
-    flange = cyl_x(rw + 3, 40, x0=60, z=P.CHEST_Z) & (inner - inner2)
-    g = plug + flange
-    pitch = 4.0 + P.MIN_WEB + 0.3
-    n = int(18 // pitch)
-    for i in range(-n, n + 1):
-        for j in range(-n, n + 1):
-            yy, zz = i * pitch + (pitch / 2 if j % 2 else 0), j * pitch * 0.866
-            if math.hypot(yy, zz) <= 18:
-                g -= cyl_x(2.0, 40, x0=60, y=yy, z=P.CHEST_Z + zz)
-    return g
+def screen_clamp():
+    """Frame that presses the 7" screen's back edge into its pocket; 6 x M3 into the face bosses."""
+    t = 2.5
+    c = facet_plane(0, SCREEN_VC, SCREEN_BACK_D - t) * extrude(
+        RectangleRounded(P.SCREEN_W + 18, P.SCREEN_H + 18, 6) - RectangleRounded(P.SCREEN_W - 14, P.SCREEN_H - 14, 4), t)
+    for u, v in SCREEN_BOSSES:
+        c -= facet_cyl(u, v, P.M3_CLEAR / 2, SCREEN_BACK_D - t - 1, SCREEN_BACK_D + 1)
+    return c & body_box(P.BODY_WALL + 0.5)
 
 
 def body_lid():
     z0 = P.BODY_Z1
-    lid = cyl(P.BODY_R1, P.LID_T, z0=z0)
-    lid = fillet(lid.edges().sort_by(Axis.Z)[-1:], 2.0)
-    for a in P.BODY_BOSS_ANGLES:
-        x, y = body_boss_xy(a, P.BODY_R1 - P.BODY_WALL - 4)
+    d, w, r = body_section(z0)
+    lid = behind_facet(Pos(0, 0, z0) * extrude(RectangleRounded(d, w, r), P.LID_T))
+    for x, y, _ in body_bosses(z0):
         lid -= cyl(P.M3_CLEAR / 2, 10, x, y, z0 - 1)
         lid -= cyl(P.M3_HEAD_D / 2 + 0.3, 2, x, y, z0 + P.LID_T - 1.5)
     # 6806 bearing boss: pocket from the top, retaining lip at the bottom
@@ -1016,7 +1098,7 @@ def printed():
     p["waist_deck"] = waist_deck()
     p["body_floor"] = body_floor()
     p["body_front"], p["body_back"] = body_shells()
-    p["chest_grille"] = chest_grille()
+    p["screen_clamp"] = screen_clamp()
     p["body_lid"] = body_lid()
     p["ball_bowl"] = ball_bowl()
     p["ball_cap"] = ball_cap()

@@ -32,7 +32,7 @@ COL = {
 PART_COL = {
     "bumper": "cream", "skirt_rear": "cream", "body_front": "cream", "body_back": "cream", "head_rear": "cream",
     "head_front": "charcoal", "ball_bowl": "charcoal", "ball_cap": "charcoal", "shutter": "orange",
-    "ear_L": "orange", "ear_R": "orange", "tyre_L": "tpu", "tyre_R": "tpu", "chest_grille": "natural",
+    "ear_L": "orange", "ear_R": "orange", "tyre_L": "tpu", "tyre_R": "tpu", "screen_clamp": "petg",
     "body_lid": "charcoal", "waist_deck": "charcoal", "chassis_plate": "petg", "dock_base": "charcoal",
     "dock_tower_lower": "charcoal", "dock_tower_upper": "charcoal", "pan_gear": "orange", "pinion_gear": "orange", "clutch_hub": "orange", "clutch_cap": "orange", "tilt_adapter": "orange",
 }
@@ -140,7 +140,7 @@ def build_scene(pose_tilt=0.0, pose_pan=0.0, exploded=False, with_dock=False, sh
         n = f.stem
         if n in DOCK and not with_dock:
             continue
-        if n.startswith("_v_") and not show_vendor and n not in ("_v_lcd_L", "_v_lcd_R"):
+        if n.startswith("_v_") and not show_vendor and n not in ("_v_lcd_L", "_v_lcd_R", "_v_screen_7in"):
             continue
         ob = import_part(f)
         if n.startswith("_v_lcd"):
@@ -150,6 +150,8 @@ def build_scene(pose_tilt=0.0, pose_pan=0.0, exploded=False, with_dock=False, sh
             bpy.ops.object.origin_set(type="ORIGIN_GEOMETRY", center="BOUNDS")
         elif n == "_v_led_ring_16":
             ob.data.materials.append(led)
+        elif n == "_v_screen_7in":
+            ob.data.materials.append(mats["lidar"])          # the belly screen, switched off: dark glass
         elif n.startswith("_v_"):
             key = next((v for k, v in VEND_COL.items() if k in n), "servo")
             ob.data.materials.append(mats[key])
@@ -174,7 +176,7 @@ def build_scene(pose_tilt=0.0, pose_pan=0.0, exploded=False, with_dock=False, sh
             ({"bumper"}, (60, 0, 0)), ({"skirt_rear"}, (-60, 0, 0)),
             ({"waist_deck", "_v_lidar_stl19p"}, (0, 0, 70)),
             ({"body_floor", "_v_pi5"}, (0, 0, 130)),
-            ({"body_front", "chest_grille", "_v_speaker_40", "_v_led_ring_16"}, (70, 0, 160)),
+            ({"body_front", "screen_clamp", "_v_screen_7in"}, (70, 0, 160)),
             ({"body_back"}, (-70, 0, 160)),
             ({"body_lid", "pinion_gear", "clutch_hub", "clutch_cap", "_v_servo_pan", "_v_pan_bearing_6806"}, (0, 0, 220)),
             ({"pan_gear"}, (0, 0, 200)),

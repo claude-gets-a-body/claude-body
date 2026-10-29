@@ -83,19 +83,33 @@ BAND_Z0 = DECK_Z0 + DECK_T                            # open band starts at deck
 BAND_H = 40.0
 PILLAR_W = 9.0
 PILLAR_ANGLES = [180.0, 60.0, -60.0]                  # none dead-ahead
-PILLAR_R = DECK_R - 8.0
+PILLAR_R = 62.0                  # inside the new abdomen's floor (was DECK_R - 8 under the cone)
 
-# ---- body column -------------------------------------------------------------------------
+# ---- body column (the abdomen) -------------------------------------------------------------
+# 29 Oct: a rounded box (matches the head) instead of the old cone, with the 7" DSI screen on a front
+# face leaning back SCREEN_TILT. Holds the Pi 5 + Freenove M.2 board, Coral, 2 case fans and the 2
+# speaker drivers. Every bought-part size marked UNCONFIRMED is a placeholder until it's measured.
 BODY_Z0 = BAND_Z0 + BAND_H        # floor plate under the column
 BODY_FLOOR_T = 4.0
-BODY_R0 = 100.0                   # radius at the bottom of the shell
-BODY_R1 = 84.0                    # radius at the top
-BODY_H = 96.0                     # shell height (was 112: lower centre of mass, REVIEW-2 #3)
+BODY_D0, BODY_W0, BODY_CR0 = 170.0, 220.0, 45.0   # bottom of the shell: depth (X), width (Y), corner radius
+BODY_D1, BODY_W1, BODY_CR1 = 150.0, 200.0, 40.0   # top
+BODY_H = 140.0                    # shell height (was 96 on the cone; the screen needs the height)
 BODY_WALL = 2.4
 BODY_Z1 = BODY_Z0 + BODY_FLOOR_T + BODY_H
-CHEST_Z = BODY_Z0 + 62.0
-CHEST_WINDOW_D = 58.0             # 12-LED WS2812 ring is ~50 OD (UNCONFIRMED)
+SCREEN_TILT = 18.0                # screen face leans back this far from vertical (faces up at people)
+FACET_X0 = 75.0                   # where the screen face meets the floor (10 mm behind the box front)
+SCREEN_W, SCREEN_H, SCREEN_T = 165.0, 100.0, 8.0    # 7" DSI 800x480 outline + depth. UNCONFIRMED: measure
+SCREEN_VIEW_W, SCREEN_VIEW_H = 156.0, 87.0          # window in the face (active area ~154 x 86). UNCONFIRMED
+SCREEN_V0 = 14.0                  # screen's bottom edge, measured up the face from the floor
+SCREEN_GLASS_IN = 1.2             # glass sits this far behind the face's outer surface
+SPK_D, SPK_T = 60.0, 30.0         # Logitech Z200 driver: Ø + depth. UNCONFIRMED: measure
+SPK_X, SPK_DZ = -10.0, 60.0       # side-firing, one each side; height above the shell bottom
+FAN_S = 40.0                      # Freenove case fan size. UNCONFIRMED: measure (could be 30)
+FAN_HIGH_DZ = 110.0               # one exhaust fan high on the back; cool air comes in through the floor
+FAN_HIGH_Y = 40.0                 # off-centre: the pan gears are behind the middle of the back
+FLOOR_INTAKE_XY = (25.0, -70.0)   # passive intake grille in the floor, beside the M.2 board
 POCKET_W, POCKET_H, POCKET_D = 70.0, 45.0, 18.0
+POCKET_DZ = 40.0                  # note pocket's bottom, above the shell bottom
 
 # ---- neck + head --------------------------------------------------------------------------
 # The head sits on a ball. Ball centre = tilt axis. Head material stays >= HEAD_CLEAR_R from the

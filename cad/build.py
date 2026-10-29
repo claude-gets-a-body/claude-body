@@ -22,7 +22,7 @@ ORIENT = {
     "chassis_plate": (0, 0, 0), "bumper": (0, 0, 0), "skirt_rear": (0, 0, 0),
     "wheel_hub_L": (90, 0, 0), "wheel_hub_R": (-90, 0, 0), "tyre_L": (90, 0, 0), "tyre_R": (90, 0, 0),
     "caster_housing_F": (180, 0, 0), "caster_retainer_F": (0, 0, 0), "caster_housing_R": (180, 0, 0), "caster_retainer_R": (0, 0, 0), "eye_backplate_L": (0, -90, 0), "eye_backplate_R": (0, -90, 0), "waist_deck": (0, 0, 0), "body_floor": (0, 0, 0),
-    "body_front": (0, 0, 0), "body_back": (0, 0, 0), "chest_grille": (0, -90, 0),
+    "body_front": (0, 0, 0), "body_back": (0, 0, 0), "screen_clamp": (0, -72, 0),
     "body_lid": (180, 0, 0), "ball_bowl": (180, 0, 0), "ball_cap": (0, 0, 0),
     "pan_gear": (0, 0, 0), "pinion_gear": (0, 0, 0),
     "head_rear": (0, -90, 0), "head_front": (0, 90, 0), "shutter": (0, -90, 0),
@@ -34,7 +34,7 @@ ORIENT = {
 # filament + count, for the print list
 MAT = {
     "tyre_L": "TPU 95A", "tyre_R": "TPU 95A", "ear_L": "TPU 95A (orange)", "ear_R": "TPU 95A (orange)",
-    "chest_grille": "PETG natural (diffuser)", "head_front": "PETG charcoal", "shutter": "PLA orange",
+    "head_front": "PETG charcoal", "shutter": "PLA orange",
     "pan_gear": "PETG", "pinion_gear": "PETG", "head_rear": "PLA cream", "body_front": "PLA cream",
     "body_back": "PLA cream", "bumper": "PETG cream", "skirt_rear": "PETG cream", "ball_cap": "PLA charcoal",
     "ball_bowl": "PETG charcoal", "clutch_hub": "PETG", "clutch_cap": "PETG", "tilt_adapter": "PETG", "tilt_coupler": "PETG",
@@ -291,7 +291,7 @@ def drop_lead():
 def stability(meshes):
     # crude centre of mass: printed parts at 25% solid density 1.24, vendor parts at real-ish masses
     vend_mass = {"_v_ballast_low": 100, "_v_ballast_deck": 150, "_v_ear_servo_L": 13, "_v_ear_servo_R": 13, "_v_axle_pin_L": 12, "_v_axle_pin_R": 12, "_v_tof_head": 2, "_v_servo_wheel_L": 55, "_v_servo_wheel_R": 55, "_v_servo_pan": 55, "_v_servo_tilt": 55,
-                 "_v_battery_3s2p": 320, "_v_lidar_stl19p": 45, "_v_pi5": 60, "_v_speaker_40": 35,
+                 "_v_battery_3s2p": 320, "_v_lidar_stl19p": 45, "_v_pi5": 60, "_v_speaker_L": 150, "_v_speaker_R": 150, "_v_screen_7in": 250, "_v_m2_board": 40, "_v_coral": 25, "_v_fan_exhaust": 15,
                  "_v_xvf3800": 40, "_v_caster_ball_F": 67, "_v_caster_ball_R": 67, "_v_lcd_L": 8, "_v_lcd_R": 8, "_v_camera_uvc": 10}
     tot, mom = 0.0, np.zeros(3)
     for n, m in meshes.items():
@@ -329,7 +329,7 @@ def stability(meshes):
 PHASE = {  # 1 = head on a stand first, 2 = legs, 3 = home (dock)
     **{n: 1 for n in ("head_rear", "head_front", "clutch_hub", "clutch_cap", "tilt_adapter", "tilt_coupler", "head_frame", "shutter", "ear_L", "ear_R", "eye_backplate_L",
                       "eye_backplate_R", "hub_drive", "hub_idle", "ball_bowl", "ball_cap", "pan_gear", "pinion_gear",
-                      "body_lid", "body_front", "body_back", "body_floor", "chest_grille")},
+                      "body_lid", "body_front", "body_back", "body_floor", "screen_clamp")},
     **{n: 3 for n in ("dock_base", "dock_tower_lower", "dock_tower_upper")},
 }
 NOTES = {
@@ -338,11 +338,11 @@ NOTES = {
     "wheel_hub_L": "inner face down", "wheel_hub_R": "inner face down",
     "tyre_L": "TPU, slow (Elegoo TPU 95A @ECC profile), dry spool", "tyre_R": "TPU, slow, dry spool",
     "ear_L": "TPU, flat", "ear_R": "TPU, flat",
-    "body_front": "upright; tree supports for the chest window only", "body_back": "upright; tree supports under the pocket",
+    "body_front": "upright; tree supports under the screen window's top edge and the clamp bosses", "body_back": "upright; tree supports under the note pocket",
     "body_lid": "top face down; hanger plates point up", "ball_bowl": "split face down, post up; tree supports inside the bowl",
     "ball_cap": "split face down", "head_rear": "back face down; tree supports (touching buildplate) under the top fillet",
     "head_front": "front face down, so the face is smooth; tree supports inside only", "head_frame": "bridge face down",
-    "chest_grille": "natural PETG, thin first layer: this is the light diffuser",
+    "screen_clamp": "flat",
     "dock_tower_lower": "on its side", "dock_tower_upper": "tag face down",
 }
 

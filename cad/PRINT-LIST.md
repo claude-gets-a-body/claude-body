@@ -8,11 +8,10 @@ Settings: 0.2 mm layers, 3 walls, 15 % gyroid unless noted, textured PEI, M3 hea
 |---|---|---|---|---|---|
 | 1 | `ball_bowl` | PETG charcoal | 92 × 99 × 102 | 74 | split face down, post up; tree supports inside the bowl |
 | 1 | `ball_cap` | PLA charcoal | 88 × 88 × 31 | 22 | split face down |
-| 1 | `body_back` | PLA cream | 100 × 200 × 96 | 78 | upright; tree supports under the pocket |
-| 1 | `body_floor` | PETG | 200 × 200 × 10 | 111 | as exported |
-| 1 | `body_front` | PLA cream | 110 × 200 × 96 | 72 | upright; tree supports for the chest window only |
-| 1 | `body_lid` | PETG | 168 × 168 × 64 | 91 | top face down; hanger plates point up |
-| 1 | `chest_grille` | PETG natural (diffuser) | 64 × 64 × 16 | 10 | natural PETG, thin first layer: this is the light diffuser |
+| 1 | `body_back` | PLA cream | 85 × 220 × 140 | 129 | upright; tree supports under the note pocket |
+| 1 | `body_floor` | PETG | 161 × 220 × 10 | 121 | as exported |
+| 1 | `body_front` | PLA cream | 85 × 220 × 140 | 84 | upright; tree supports under the screen window's top edge and the clamp bosses |
+| 1 | `body_lid` | PETG | 104 × 200 × 64 | 85 | top face down; hanger plates point up |
 | 1 | `clutch_cap` | PETG | 30 × 30 × 2 | 2 | as exported |
 | 1 | `clutch_hub` | PETG | 30 × 30 × 12 | 4 | as exported |
 | 1 | `ear_L` | TPU 95A (orange) | 26 × 52 × 5 | 4 | TPU, flat |
@@ -26,6 +25,7 @@ Settings: 0.2 mm layers, 3 walls, 15 % gyroid unless noted, textured PEI, M3 hea
 | 1 | `hub_idle` | PETG | 46 × 35 × 25 | 6 | as exported |
 | 1 | `pan_gear` | PETG | 48 × 48 × 10 | 11 | as exported |
 | 1 | `pinion_gear` | PETG | 48 × 48 × 10 | 10 | as exported |
+| 1 | `screen_clamp` | PETG | 118 × 183 × 2 | 24 | flat |
 | 1 | `shutter` | PLA orange | 22 × 20 × 4 | 1 | as exported |
 | 1 | `tilt_adapter` | PETG | 25 × 25 × 6 | 2 | as exported |
 | 1 | `tilt_coupler` | PETG | 25 × 25 × 14 | 5 | as exported |
@@ -45,4 +45,4 @@ Settings: 0.2 mm layers, 3 walls, 15 % gyroid unless noted, textured PEI, M3 hea
 | 3 | `dock_tower_lower` | PETG | 150 × 60 × 16 | 93 | on its side |
 | 3 | `dock_tower_upper` | PETG | 170 × 96 × 16 | 114 | tag face down |
 
-Total ≈ 2.1 kg. Component brackets for the camera, boards and buck converter are deliberately NOT in this list. They get modelled after the real parts are measured.
+Total ≈ 2.2 kg. Component brackets for the camera, boards and buck converter are deliberately NOT in this list. They get modelled after the real parts are measured.

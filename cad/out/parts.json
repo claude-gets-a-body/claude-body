@@ -129,42 +129,34 @@
  },
  {
   "part": "body_floor",
-  "x": 200.0,
-  "y": 200.0,
+  "x": 161.3,
+  "y": 220.0,
   "z": 10.0,
-  "grams_pla": 111.0,
+  "grams_pla": 121.0,
   "material": "PETG"
  },
  {
   "part": "body_front",
-  "x": 110.0,
-  "y": 200.0,
-  "z": 96.0,
-  "grams_pla": 72.0,
+  "x": 85.0,
+  "y": 220.0,
+  "z": 140.0,
+  "grams_pla": 84.0,
   "material": "PLA cream"
  },
  {
   "part": "body_back",
-  "x": 100.0,
-  "y": 200.0,
-  "z": 96.0,
-  "grams_pla": 78.0,
+  "x": 85.0,
+  "y": 220.0,
+  "z": 140.0,
+  "grams_pla": 129.0,
   "material": "PLA cream"
  },
  {
-  "part": "chest_grille",
-  "x": 64.0,
-  "y": 64.0,
-  "z": 15.8,
-  "grams_pla": 10.0,
-  "material": "PETG natural (diffuser)"
- },
- {
   "part": "body_lid",
-  "x": 168.0,
-  "y": 168.0,
+  "x": 104.5,
+  "y": 200.0,
   "z": 64.3,
-  "grams_pla": 91.0,
+  "grams_pla": 85.0,
   "material": "PETG"
  },
  {
@@ -301,6 +293,14 @@
   "y": 96.0,
   "z": 16.0,
   "grams_pla": 114.0,
+  "material": "PETG"
+ },
+ {
+  "part": "screen_clamp",
+  "x": 118.0,
+  "y": 183.0,
+  "z": 2.5,
+  "grams_pla": 24.0,
   "material": "PETG"
  }
 ]
