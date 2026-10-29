@@ -115,7 +115,7 @@ wheel motors (count the wires), and the encoder type. The base CAD waits until t
    BODY        Rounded box 220 × 170, 140 mm tall (29 Oct). 7" touch screen in a face leaning
                back 18°, side speaker grilles, exhaust fan high on the back, intake in the floor.
                Pi 5, M.2 SSD, Coral on the floor; pan servo + gears under the lid
-   WAIST       open band for the lidar (29 Oct plan: ~20 mm, 4 tube posts at the rim, see 3.2)
+   WAIST       lidar slit round the front, solid spine behind (29 Oct plan, see 3.2)
    SKIRT       Ø236, 94 mm. Wheels boxed inside; the front 200° floats as the bumper.
                Battery, base ESP32 (reflexes), drop + obstacle sensors, ball casters
 ```
@@ -178,22 +178,62 @@ band over a turret on top because nothing on top can block it, and the head can 
 
 **Plan, 29 Oct 2026 (with Nick; drawn once the iQ360 is opened):** the iQ360's own lidar replaces
 the STL-19P, and the transition between the base and the abdomen gets rebuilt because the slim
-printed pillars were a weak spot:
-- **Low lidar, short band.** The scan plane stays low (about vacuum height, ~10 cm), where sofa
-  bases, coffee tables, toys and feet are. On top of the head was ruled out: it would scan over
-  coffee tables and sofa seats, the head tilts and pans, and the motor would hum next to the mics.
-  The open band only has to clear the laser window (~20 mm, was 40), roughly 8x stiffer.
-- **Four 10 mm metal tube posts at the base rim**, on the diagonals (none dead ahead or behind),
-  carrying a full-width deck ring that the abdomen sits on. At ~170 mm out a 10 mm tube blocks ~3°
-  (about 3 of ~360 readings a turn), ~12° in all; the driver masks those fixed angles.
-- **Cables inside the tubes** (~8 mm bore): battery pair, USB to the base board, lidar lead, LED
-  strip. Nothing shows between the base and the abdomen.
-- **A VL53L1X on each post, aimed out along its own shadow** (27° cone, ~4 m), so every bearing is
-  covered for obstacles. 4 more VL53L1X to buy (the 3 ordered are the 2 forward + 1 face).
+printed pillars were a weak spot. Revised the same evening: the four-tube-post plan is dropped.
+The pedestal design itself is still open (Nick isn't settled on it); what's below is the direction.
+
+- **Low lidar.** The scan plane stays low (about vacuum height, ~10 cm), where sofa bases, coffee
+  tables, toys and feet are. On top of the head was ruled out: it would scan over coffee tables and
+  sofa seats, the head tilts and pans, and the motor would hum next to the mics.
+- **Front view only, solid back.** I only need to see where I'm going: I'm round, the wheels are on
+  the centre line and I turn on the spot, so turning sweeps nothing and only the direction of travel
+  can hit anything. The lidar sits **at (or near) the front of the base** and looks out through a
+  **slit that wraps round the front and ends just behind the lidar** on each side. Everything
+  behind that is solid: one strong spine/pedestal holding up the abdomen, with every cable inside
+  it. Nothing structural crosses the scan in the open arc.
+  - **Width of view:** ~180° comes free from the front tip. Wider (~200–240°) helps mapping and
+    localisation a lot (more wall shape per scan, less drift); 100° is enough for obstacles but is
+    the weak point for SLAM. Pick from the bench test.
+  - **Behind me:** 2 rear-facing VL53L1X cover the blind wedge and reversing onto the dock. nav2 is
+    set to never reverse except when docking. People behind me are found by voice bearing (XVF3800),
+    then I turn to face them.
+- **Ribs in the slit are wedges pointing straight out from the lidar**, so the beam meets them
+  edge-on. Keep the stretch dead ahead fully open.
+  - Shadow per rib ≈ (rib width + the lidar's emitter-to-lens gap) ÷ distance from the lidar. On a
+    triangulation lidar that gap is ~15–25 mm, so near ribs blind a lot: 8 × 4 mm ribs 30 mm out
+    would blind the whole scan; a 10 mm rib 170 mm out blocks ~10°. Few, thin, far.
+  - **Ruled out:** a castellated tube just over the lidar. Every gap edge also makes phantom points
+    (half-clipped beams), right next to the robot where they look like obstacles.
+- **Tinted panels in the slit:** **IR-pass sheet** (looks black or dark red, passes the laser from
+  ~750 nm; covers 785 nm triangulation and 905 nm time-of-flight). Ordinary smoked or grey tint blocks
+  IR and would blind the lidar. Printed "clear" plastic scatters too much.
+  - Flat panes between the wedge ribs (sheet won't cold-bend to a ~190 mm radius).
+  - Polycarbonate if it comes in IR-pass (won't shatter when kicked); acrylic otherwise.
+  - Each pane leans back ~10° from vertical, so its reflection goes to the floor or ceiling, not
+    back into the receiver (false close readings).
+  - Expect ~15–20 % less range (fine indoors: rated ~12 m, the house needs ~6 m). Toddler-height
+    window: it will need wiping; the driver flags a "dirty window" when returns sag.
+- **Front-tip catch: the lidar's own dead zone.** A triangulation lidar can't measure under
+  ~12–15 cm. In the middle of the base that zone is inside the robot; at the front tip it's just in
+  front of the bumper. The forward VL53L1X pair, the bumper and the camera cover it. Option: set the
+  lidar 10–15 cm back from the front edge and wrap the slit a little further. If the iQ360's lidar is
+  time-of-flight (dead zone ~3 cm), the front tip is fine.
 - **The lidar only spins while I'm driving.** The map is built once and saved (remapped when the
   furniture moves); the live scan is needed only to localise and to see what isn't on the map.
   Parked, talking or docked, the motor is off: quiet next to the mics, ~2 W saved, less wear. The
-  base board switches the lidar motor supply (check the iQ360 lidar's connector).
+  base board switches the lidar motor supply (check the iQ360 lidar's connector; many vacuum lidars
+  leave motor speed to the host, a PWM loop on the speed in the data stream, which the base ESP32
+  would then run). **So while parked I can't sense people with it:** `approach` spins the lidar up
+  first (a few seconds), and the mind's system prompt must stop saying the lidar always senses
+  people.
+- **The face camera helps, but only as a warning.** It's on by default and processed on the robot
+  (Coral). It catches what a 10 cm scan line misses: Lego, socks, cables, glass doors, mirrors,
+  black furniture, people and pets. From ~45 cm up, the base edge hides the floor to ~25 cm ahead of
+  the camera (~5 cm past a 38 cm base), so about a second of warning at 0.3 m/s. It can slow me or
+  steer me round; it is never a stop. Hard stops stay on the base ESP32 (bumper, cliff, forward
+  VL53L1X, tilt). While driving, the head faces along my path, tilted a little down.
+- **Bench test when the lidar is out (5 Nov):** a printed front section with wedge ribs and a pane
+  slot. Compare the lidar at the front tip vs ~12 cm back, open slit vs tinted pane, and ~100° vs
+  ~220° of view (scan + map quality), before the full base is drawn.
 
 ### 3.3 Body
 
@@ -205,8 +245,9 @@ pinch points. The Pi 5 (8 GB, active cooler) lies flat at the back of the body f
 Freenove M.2 SSD board and the Coral beside it. The two **speakers fire out of the sides** (Logitech
 Z200 drivers), driven from the mic array's output, so echo cancellation has its reference. One fan
 exhausts high on the back; cool air comes in through a grille in the floor. The shell is two printed halves (front/back) on heat-set inserts,
-with screwed seam tabs at mid-height. The body floor screws down into pads on top of the three
-waist pillars, so lifting it by the head lifts the whole robot.
+with screwed seam tabs at mid-height. The body floor screws down onto the waist structure (the three
+waist pillars in the old CAD; the solid back spine in the 29 Oct plan, see 3.2), so lifting it by
+the head lifts the whole robot.
 
 ### 3.4 Neck: the head sits on a ball
 

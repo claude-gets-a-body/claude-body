@@ -1,6 +1,6 @@
 # Where the build is up to
 
-Last updated 29 Oct 2026. The detail lives in DESIGN.md (what's decided), BOM.md (every part and
+Last updated 29 Oct 2026 (evening). The detail lives in DESIGN.md (what's decided), BOM.md (every part and
 its status) and `cad/PRINT-LIST.md` (what to print). This page is the short version: what's done,
 what's waiting, and what happens next.
 
@@ -27,26 +27,31 @@ what's waiting, and what happens next.
 | Speed | About 0.3–0.4 m/s at most, set by the cliff sensors' reach and the vacuum's gearbox | Walking pace would mean over a metre to stop at the top of the stairs; the robot meets people instead of chasing them |
 | Lidar and the waist | See below | |
 
-## The lidar and the waist (planned with Nick on 29 Oct)
+## The lidar and the waist (planned with Nick on 29 Oct, revised that evening)
 
 The slim printed pillars between the base and the abdomen were a weak spot, and they're also the
-only route for cables. The new plan (drawn once the iQ360 is opened and its lidar measured):
+only route for cables. The four-tube-post plan is **dropped**. The pedestal itself is still open
+(Nick isn't settled on it); this is the direction, drawn once the iQ360 is opened and its lidar
+measured. Full detail in DESIGN.md §3.2.
 
 1. **The lidar stays low** (about vacuum height, ~10 cm), where furniture bases, toys and feet are.
-   Mounting it on top of the head was considered and ruled out: a single scan plane at ~46 cm passes
-   over coffee tables and sofa seats, the head tilts and pans, and the motor would hum beside the mics.
-2. **The open band only needs to clear the laser window** (~20 mm instead of 40), which makes the
-   supports roughly 8 times stiffer.
-3. **Four 10 mm metal tube posts at the base rim**, on the diagonals, carrying a full-width deck ring
-   that the abdomen sits on. Each blocks ~3° of the scan (about 3 of ~360 readings); the driver
-   masks those fixed angles.
-4. **All the cables run inside the tubes** (~8 mm bore): battery, USB to the base board, the lidar
-   lead, the LED strip.
-5. **A VL53L1X on each post looks out along that post's own shadow**, so every direction is covered
-   for obstacles. Four more to buy (the 3 already ordered are the 2 forward + 1 face sensors).
-6. **The lidar only spins while driving.** The map is built once and saved; the live scan is for
-   finding my place on it and seeing what isn't on it. Parked, talking or docked, it's off (quiet,
-   ~2 W saved, less wear). The base board switches the lidar motor's supply.
+   On top of the head was ruled out.
+2. **Front view only.** The lidar sits at (or near) the front of the base, looking out through a
+   **slit round the front that ends just behind it**. I'm round and turn on the spot, so only the
+   direction of travel can hit anything. Everything behind the slit is a **solid spine** holding up
+   the abdomen, with all the cables inside.
+3. **Ribs in the slit are wedges pointing out from the lidar** (edge-on to the beam), dead ahead
+   left open. Close-in castellations were ruled out: near ribs blind far more than their width, and
+   their edges make phantom points.
+4. **Tinted IR-pass panes** in the slit: flat, between the ribs, leaned back ~10°, polycarbonate if
+   available. Not ordinary smoked tint (blocks the laser).
+5. **Rear:** 2 rear-facing VL53L1X; nav2 never reverses except to dock.
+6. **The lidar only spins while driving.** `approach` spins it up first, and the system prompt
+   stops claiming the lidar always senses people.
+7. **The face camera warns, never stops.** Low clutter, glass, mirrors, people and pets; it can slow
+   or steer me. Hard stops stay on the base ESP32. The head faces my path while driving.
+8. **Bench test on 5 Nov:** lidar at the front tip vs ~12 cm back (a triangulation lidar's 12–15 cm
+   dead zone lands outside the bumper at the tip), open slit vs pane, ~100° vs ~220° of view.
 
 ## CAD state (`cad/out/print/`)
 
@@ -73,20 +78,20 @@ at 0.5–0.8 GB).
 - **Z200 drivers:** diameter, depth, impedance (Ω), and what the power adapter says (amp swap or keep)
 - **Freenove fans:** 30 or 40 mm; **Freenove M.2 board:** outline
 - **DualEye:** glass front to standoff ends; **shoulder screw:** head height
-- **iQ360 (5 Nov):** diameter and weight, wheel positions, motor wire count (brushed or brushless), lidar model, connector and height, cliff sensor positions, battery voltage
+- **iQ360 (5 Nov):** diameter and weight, wheel positions, motor wire count (brushed or brushless), lidar model (triangulation or time-of-flight), emitter-to-lens gap, connector, motor control and height, cliff sensor positions, battery voltage
 - **Heat-set inserts:** outside diameter (sets `M3_INSERT_D`)
 
 ## Still to buy
 
 - Wheel motor drivers (after counting the iQ360's motor wires: DRV8874 for brushed, a BLDC driver otherwise)
 - Charger or dock (a 4S pack needs 16.8 V; maybe reuse the vacuum's dock)
-- Four more VL53L1X (one per post)
-- Four 10 mm metal tubes for the posts (length set by the band)
+- Two more VL53L1X for the rear (not yet OK'd by Nick)
+- IR-pass sheet for the lidar panes, polycarbonate if available (not yet OK'd by Nick; wanted for the 5 Nov bench test)
 - A PAM8403 board if the Z200 amp can't run on plain DC
 
 ## Next CAD jobs
 
-1. Base, waist band, posts and deck ring round the measured iQ360 parts
+1. Lidar bench-test piece (front section, wedge ribs, pane slot), then the base, lidar slit and back spine round the measured iQ360 parts
 2. Speaker boxes (sealed, printed) once the drivers are measured
 3. Brackets for the camera, boards and converters once they're in hand
 4. Re-run the tip-over check with the real masses
