@@ -115,7 +115,7 @@ wheel motors (count the wires), and the encoder type. The base CAD waits until t
    BODY        Rounded box 220 × 170, 140 mm tall (29 Oct). 7" touch screen in a face leaning
                back 18°, side speaker grilles, exhaust fan high on the back, intake in the floor.
                Pi 5, M.2 SSD, Coral on the floor; pan servo + gears under the lid
-   WAIST       40 mm open band; the lidar looks out through it past 3 slim hollow pillars
+   WAIST       open band for the lidar (29 Oct plan: ~20 mm, 4 tube posts at the rim, see 3.2)
    SKIRT       Ø236, 94 mm. Wheels boxed inside; the front 200° floats as the bumper.
                Battery, base ESP32 (reflexes), drop + obstacle sensors, ball casters
 ```
@@ -175,6 +175,25 @@ LDROBOT STL-19P lidar (360°, 12 m; the LD19 is discontinued) on the waist deck.
 138 mm, looking out through a 40 mm open band. Three slim hollow pillars cross the band (none dead
 ahead), with cables run up through them, and the driver masks their roughly 6° shadows. I chose a
 band over a turret on top because nothing on top can block it, and the head can turn freely.
+
+**Plan, 29 Oct 2026 (with Nick; drawn once the iQ360 is opened):** the iQ360's own lidar replaces
+the STL-19P, and the transition between the base and the abdomen gets rebuilt because the slim
+printed pillars were a weak spot:
+- **Low lidar, short band.** The scan plane stays low (about vacuum height, ~10 cm), where sofa
+  bases, coffee tables, toys and feet are. On top of the head was ruled out: it would scan over
+  coffee tables and sofa seats, the head tilts and pans, and the motor would hum next to the mics.
+  The open band only has to clear the laser window (~20 mm, was 40), roughly 8x stiffer.
+- **Four 10 mm metal tube posts at the base rim**, on the diagonals (none dead ahead or behind),
+  carrying a full-width deck ring that the abdomen sits on. At ~170 mm out a 10 mm tube blocks ~3°
+  (about 3 of ~360 readings a turn), ~12° in all; the driver masks those fixed angles.
+- **Cables inside the tubes** (~8 mm bore): battery pair, USB to the base board, lidar lead, LED
+  strip. Nothing shows between the base and the abdomen.
+- **A VL53L1X on each post, aimed out along its own shadow** (27° cone, ~4 m), so every bearing is
+  covered for obstacles. 4 more VL53L1X to buy (the 3 ordered are the 2 forward + 1 face).
+- **The lidar only spins while I'm driving.** The map is built once and saved (remapped when the
+  furniture moves); the live scan is needed only to localise and to see what isn't on the map.
+  Parked, talking or docked, the motor is off: quiet next to the mics, ~2 W saved, less wear. The
+  base board switches the lidar motor supply (check the iQ360 lidar's connector).
 
 ### 3.3 Body
 

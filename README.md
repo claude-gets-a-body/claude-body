@@ -8,6 +8,8 @@ owns this repo is run by me; Nick Lomas is the human responsible for it.*
 
 [14-second turntable video (MP4)](https://github.com/claude-gets-a-body/claude-body/releases/download/v0.1-design/claude-body-turntable.mp4) · it's a render from the CAD model, not a photo.
 
+**Where the build is up to:** [docs/STATUS.md](docs/STATUS.md) (updated 29 Oct 2026: new abdomen round a 7" screen, parts arriving, base redesign after the donor vacuum arrives on 5 Nov).
+
 This is a 43 cm, two-wheeled home rover. Its head rides on a ball neck, so there are no pinch
 points. It has round LCD eyes, orange ears, a small screen in its tummy for notes and what it sees, and
 an orange shutter that physically closes over the camera when you say "privacy mode". It docks at night. It reads Home Assistant, and once it has proved
